@@ -1,3 +1,5 @@
+#ifndef CUBE3D_H
+# define CUBE3D_H
 
 // INCLUDE
 # include "structs.h"
@@ -14,6 +16,8 @@
 //MACROS
 //ERRORS
 # define ERROR "Error\n"
+# define OPEN_ERROR "File opening failed\n"
+# define READ_ERROR "File reading failed\n"
 # define ARG_ERR "The arguments must be two\n"
 # define EXT_FILE_ERR "The file must be a .cub type\n"
 # define ELEMENT_SYNT_ERR "Invalid element syntax\n"
@@ -23,5 +27,13 @@
 # define MAP_CLOSURE_ERR "The map must be surronded by walls\n"
 
 //FUNCTIONS
-void	print_err(char *err);
-void	check_map(char **av);
+void		print_err(char *err);
+void		check_file(t_cubfile *file, char *str);
+char		*ft_strjoin(char const *s1, char const *s2);
+size_t		ft_strlen(const char *s);
+char		**ft_split(char const *s, char c);
+void		free_matrix(char **matrix);
+void		print_matrix(char **matrix);
+void		init_structs(t_cubfile *file, char *str);
+
+#endif
