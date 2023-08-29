@@ -1,4 +1,4 @@
-# include "../includes/cube3d.h"
+# include "../../includes/cube3d.h"
 
 int	check_format_file(char *str)
 {
@@ -43,18 +43,6 @@ void	open_read_file(t_cubfile *file)
 	}
 }
 
-void	where_is_map(t_cubfile *file)
-{
-	if (file->matrix_end_index != file->map_end_index)
-	{
-		print_err(MAP_POS_ERR);
-		free(file->file_path);
-		free_matrix(file->file_matrix);
-		free(file->buff);
-		exit(1);
-	}
-}
-
 void	check_indexes(t_cubfile *file)
 {
 	int i;
@@ -93,14 +81,20 @@ void	check_file(t_cubfile *file, char *str)
 	//controllo dove si trova la mappa
 	where_is_map(file);
 
-	//se index fine mappa è uguale all'index di fine matrice, posizione mappa ok.
+	//controllo i valori degli identificatori
+	check_id_file(file);
+
+	//controllo i valori RGB di F e C
+	check_RGB_values(file);
 	printf("INDICE INIZIO MATRIX %d\n", file->matrix_start_index);
 	printf("INDICE FINE MATRIX %d\n", file->matrix_end_index);
 	printf("INDICE INIZIO MAPPA %d\n", file->map_start_index);
 	printf("INDICE FINE MAPPA %d\n", file->map_end_index);
-	free(file->file_path);
-	free_matrix(file->file_matrix);
-	free(file->buff);
+	
+	printf("F FLAG %d\n", file->F_flag);
+	printf("C FLAG %d\n", file->C_flag);
+	printf("NO FLAG %d\n", file->NO_flag);
+	printf("SO FLAG %d\n", file->SO_flag);
+	printf("WE FLAG %d\n", file->WE_flag);
+	printf("EA FLAG %d\n", file->EA_flag);
 }
-
-

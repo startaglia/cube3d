@@ -1,6 +1,7 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+
 typedef struct cubfile
 {
 	char 	**file_matrix;
@@ -13,6 +14,22 @@ typedef struct cubfile
 	int		matrix_end_index;
 	int		map_start_index;
 	int		map_end_index;
+	int		floor_index;
+	int		ceiling_index;
+	int		NO_text_index;
+	int		SO_text_index;
+	int		WE_text_index;
+	int		EA_text_index;
+	int		NO_flag;
+	int		SO_flag;
+	int		EA_flag;
+	int		WE_flag;
+	int		F_flag;
+	int		C_flag;
+	int		first_RGB_num;
+	int		second_RGB_num;
+	int		third_RGB_num;
+
 
 	
 	char *mapeltype[5];

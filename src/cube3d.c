@@ -1,11 +1,13 @@
 #include "../includes/cube3d.h"
+//SE SI METTE UN ESTENSIONE .CU NON MI ENTRA NELL'ERRORE DEL TIPO DI ESTENSIONE MA MI VA IN ERRORE L'OPEN. CAPIRE SE DA PROBLEMI
+
 
 //CONTROLLI SUL NUM DI ARG											OK
 //CONTROLLI SUL TIPO DI FILE										OK
 //CONTROLLI SULL'ORDINE DEGLI ELEMENTI NEL FILE						OK
-//CONTROLLI SUGLI IDENTIFICATORI						
-//CONTROLLI CHE LA PATH DOPO L'IDENTIFICATORE SIA CORRETTA?		
-//CONTROLLI CHE IL CODICE RGB SIA CORRETTO		
+//CONTROLLI SUI TIPI DI IDENTIFICATORI								OK
+//CONTROLLI CHE LA PATH DOPO L'IDENTIFICATORE SIA CORRETTA?			
+//CONTROLLI CHE IL CODICE RGB SIA CORRETTO range [0,255]			
 //CONTROLLI CHE LA MAPPA SIA SHIELDATA								
 //CONTROLLI CHE NON CI SIANO BUCHI NELLA MAPPA						
 //CONTROLLI SUI TIPI DI VALORI NELLA MAPPA							
@@ -22,8 +24,13 @@ int main(int ac, char **av)
 		exit(1);
 	}
 	file = malloc(sizeof(t_cubfile));
+	//inizializzo i valori delle structs
 	init_structs(file, av[1]);
+	//faccio i dovuti controlli sul file.cub
 	check_file(file, av[1]);
+	free(file->file_path);
+	free_matrix(file->file_matrix);
+	free(file->buff);
 	free(file);
 
 	return 0;
