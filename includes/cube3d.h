@@ -44,5 +44,7 @@ void		check_indexes(t_cubfile *file);
 void		check_id_file(t_cubfile *file);
 void		check_RGB_values(t_cubfile *file);
 int			ft_atoi(char *str);
+int			ft_isprint(int c);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

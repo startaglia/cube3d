@@ -83,6 +83,13 @@ void	check_file(t_cubfile *file, char *str)
 
 	//controllo i valori degli identificatori
 	check_id_file(file);
+	
+	printf("F FLAG %d\n", file->F_flag);
+	printf("C FLAG %d\n", file->C_flag);
+	printf("NO FLAG %d\n", file->NO_flag);
+	printf("SO FLAG %d\n", file->SO_flag);
+	printf("WE FLAG %d\n", file->WE_flag);
+	printf("EA FLAG %d\n", file->EA_flag);
 
 	//controllo i valori RGB di F e C
 	check_RGB_values(file);
@@ -91,10 +98,4 @@ void	check_file(t_cubfile *file, char *str)
 	printf("INDICE INIZIO MAPPA %d\n", file->map_start_index);
 	printf("INDICE FINE MAPPA %d\n", file->map_end_index);
 	
-	printf("F FLAG %d\n", file->F_flag);
-	printf("C FLAG %d\n", file->C_flag);
-	printf("NO FLAG %d\n", file->NO_flag);
-	printf("SO FLAG %d\n", file->SO_flag);
-	printf("WE FLAG %d\n", file->WE_flag);
-	printf("EA FLAG %d\n", file->EA_flag);
 }
