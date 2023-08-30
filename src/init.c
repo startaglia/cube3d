@@ -7,13 +7,18 @@ void	init_structs(t_cubfile *file, char *str)
 	file->map_start_index = 0;
 	file->matrix_end_index = 0;
 	file->map_end_index = 0;
-	file->floor_index = 0;
-	file->ceiling_index = 0;
+	file->F_text_index = 0;
+	file->F_text_y = 0;
+	file->C_text_index = 0;
+	file->C_text_y = 0;
 	file->NO_text_index = 0;
+	file->NO_text_y = 0;
 	file->SO_text_index = 0;
+	file->SO_text_y = 0;
 	file->WE_text_index = 0;
+	file->WE_text_y = 0;
 	file->EA_text_index = 0;
-
+	file->EA_text_y = 0;
 	file->NO_flag = false;
 	file->SO_flag = false;
 	file->WE_flag = false;

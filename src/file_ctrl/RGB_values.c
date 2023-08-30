@@ -3,117 +3,99 @@
 void	check_RGB_values(t_cubfile *file)
 {
 	int i;
-	// char **num_split_comma;
-	i = 0;
-	
+	char **num_split_comma;
+	char * buff_string;
+	i = file->F_text_y + 1;
 	//controllo eventuali char tra l'identificatore e il numero
-	i++;
-	while (!ft_isdigit(file->file_matrix[file->floor_index][i]) || ((file->file_matrix[file->floor_index][i] >= 9 && file->file_matrix[file->floor_index][i] <= 13) || (file->file_matrix[file->floor_index][i] == 32)))
-	{
-		printf("VALUE %c\n", file->file_matrix[file->floor_index][i]);
 
-		if (ft_isprint(file->file_matrix[file->floor_index][i]))
+	while (!ft_isdigit(file->file_matrix[file->F_text_index][i]))
+	{
+		if (ft_isprint(file->file_matrix[file->F_text_index][i]))
 		{
-			printf("entro qui\n");
 			print_err(RGB_VALUE_ERR);
 			exit(1);
 		}
 		i++;
 	}
+	printf("IL VALORE DI MATRIX QUI E'--> %c I INVECE VALE: %d\n", file->file_matrix[file->F_text_index][i], i);
+
 	//creo una substr che isoli solo i numeri con la virgola per poterci fare la split
-	int z = 0;
-	int n = 0;
-	int m = 0;
+	buff_string = ft_substr(file->file_matrix[file->F_text_index], i, ( ft_strlen(file->file_matrix[file->F_text_index]) - i + 1));
+	num_split_comma = ft_split(buff_string, ',');
+	free(buff_string);
 
-	//ciclo per contare quanti sono gli spazi tra l'inizio e l'identificatore.
-	// while (file->file_matrix[file->floor_index][n] != 'F')
-	// {
-	// 	if (file->file_matrix[file->floor_index][n] == 9)
-	// 	{
-	// 		m += 4;
-	// 		continue;
-	// 	}
-	// 	// z++;
-	// 	m++;
-	// 	n++;
-	// }
-	printf("CHAR TRA L'INIZIO E L'ID %d\n", m);
-	
-	//ciclo per contare quanti sono gli spazi tra l'identificatore e il primo num.
-	// ++z;
-	while (!ft_isdigit(file->file_matrix[file->floor_index][++z]))
+	//avendo i numeri in una matrix posso fare atoi e controllare se sono nel range
+	file->first_RGB_num = ft_atoi(num_split_comma[0]);
+	if(!(file->first_RGB_num <= 255 && file->first_RGB_num >= 0))
 	{
-		if (file->file_matrix[file->floor_index][++z] == 9)
-		{
-			n += 4;
-			continue;
-		}
-		// z++;
-		n++;
+		print_err(RGB_RANGE_ERR);
+		free_matrix(num_split_comma);
+		exit(1);
 	}
-	n--;
-	printf("CHAR TRA L'ID E IL PRIMO NUM %d\n", n);
-	
-	printf("qui %s\n", file->file_matrix[file->floor_index]);
-	char *test = ft_substr(file->file_matrix[file->floor_index], n, (ft_strlen((file->file_matrix[file->floor_index] ))));
-	printf("CHAR* TRIMMATA %s\n", test);
-
-	file->first_RGB_num = ft_atoi(file->file_matrix[file->floor_index] + 1);
-	// i++;
-	printf("VALUE FUORI %c\n", file->file_matrix[file->floor_index][i + 1]);
-	file->file_matrix[file->floor_index][i]++;
-	printf("VALUE FUORI %c\n", file->file_matrix[file->floor_index][i]);
-
-	file->second_RGB_num = ft_atoi(file->file_matrix[file->floor_index]);
+	file->second_RGB_num = ft_atoi(num_split_comma[1]);
+	if(!(file->second_RGB_num <= 255 && file->second_RGB_num >= 0))
+	{
+		print_err(RGB_RANGE_ERR);
+		free_matrix(num_split_comma);
+		exit(1);
+	}
+	file->third_RGB_num = ft_atoi(num_split_comma[2]);
+	if(!(file->third_RGB_num <= 255 && file->third_RGB_num >= 0))
+	{
+		print_err(RGB_RANGE_ERR);
+		free_matrix(num_split_comma);
+		exit(1);
+	}
 	printf("NUM1 %d\n", file->first_RGB_num);
 	printf("NUM2 %d\n", file->second_RGB_num);
+	printf("NUM3 %d\n", file->third_RGB_num);
+	free_matrix(num_split_comma);
 
+	//faccio la stessa cosa per C
+	i = file->C_text_y + 1;
 	
-		// file->file_matrix[file->floor_index][i] == ',')
-	// {
-	// 	printf("VALUE DENTRO %c\n", file->file_matrix[file->floor_index][i]);
-		
-	// 	if (ft_isdigit(file->file_matrix[file->floor_index][i]))
-	// 	{
-	// 		print_err(RGB_VALUE_ERR);
-	// 		exit(1);
-	// 	}
-	// 	i++;
-	// 	// if (((!ft_isdigit(file->file_matrix[file->floor_index][i])) && (file->file_matrix[file->floor_index][i] <= 9 && file->file_matrix[file->floor_index][i] >= 13)) || (file->file_matrix[file->floor_index][i] != 32))
-	// 	// {
-	// 	// 	print_err(RGB_VALUE_ERR);
-	// 	// 	exit(1);
-	// 	// }
-	// }
-	
-	
+	//controllo eventuali char tra l'identificatore e il numero
+	while (!ft_isdigit(file->file_matrix[file->C_text_index][i]))
+	{
+		if (ft_isprint(file->file_matrix[file->C_text_index][i]))
+		{
+			print_err(RGB_VALUE_ERR);
+			exit(1);
+		}
+		i++;
+	}
+	printf("IL VALORE DI MATRIX QUI E'--> %c I INVECE VALE: %d\n", file->file_matrix[file->C_text_index][i], i);
 
-	// file->second_RGB_num = ft_atoi(file->file_matrix[file->floor_index] + 1);
-	
+	//creo una substr che isoli solo i numeri con la virgola per poterci fare la split
+	buff_string = ft_substr(file->file_matrix[file->C_text_index], i, ( ft_strlen(file->file_matrix[file->C_text_index]) - i + 1));
+	num_split_comma = ft_split(buff_string, ',');
+	free(buff_string);
 
-	
-	// while ((!ft_isdigit(file->file_matrix[file->floor_index][i]) && file->file_matrix[file->floor_index][j] >= 9 && file->file_matrix[file->floor_index][j] <= 13) || file->file_matrix[file->floor_index][j] == 32)
-	// {
-	// 	// printf("VALUE %c\n", file->file_matrix[file->floor_index][i]);
-	// 	i++;
-	// }
-
-	// while (file->file_matrix[file->floor_index][i]))
-	// {
-	// 	printf("VALUE %c\n", file->file_matrix[file->floor_index][i]);
-	// 	i++;
-	// }
-	
-	// if (file->file_matrix[file->floor_index][i] <= '2' && file->file_matrix[file->floor_index][i] >= '0')
-	// 	i++;
-	// j = i;
-	// while (file->file_matrix[file->floor_index][j])
-	// {
-	// 	if ((file->file_matrix[file->floor_index][j] >= 9 && file->file_matrix[file->floor_index][j] <= 13) || file->file_matrix[file->floor_index][j] == 32)
-	// 		j++;
-	// 	else
-	// 	{
-	// 		print_err(RGB_VALUE_ERR);
-	// 		exit(1);
-	// 	}
+	//avendo i numeri in una matrix posso fare atoi e controllare se sono nel range
+	file->first_RGB_num = ft_atoi(num_split_comma[0]);
+	if(!(file->first_RGB_num <= 255 && file->first_RGB_num >= 0))
+	{
+		print_err(RGB_RANGE_ERR);
+		free_matrix(num_split_comma);
+		exit(1);
+	}
+	file->second_RGB_num = ft_atoi(num_split_comma[1]);
+	if(!(file->second_RGB_num <= 255 && file->second_RGB_num >= 0))
+	{
+		print_err(RGB_RANGE_ERR);
+		free_matrix(num_split_comma);
+		exit(1);
+	}
+	file->third_RGB_num = ft_atoi(num_split_comma[2]);
+	if(!(file->third_RGB_num <= 255 && file->third_RGB_num >= 0))
+	{
+		print_err(RGB_RANGE_ERR);
+		free_matrix(num_split_comma);
+		exit(1);
+	}
+	printf("NUM1 %d\n", file->first_RGB_num);
+	printf("NUM2 %d\n", file->second_RGB_num);
+	printf("NUM3 %d\n", file->third_RGB_num);
+	free_matrix(num_split_comma);
 }
+	
