@@ -4,7 +4,6 @@ void	check_id_file(t_cubfile *file)
 {
 	int i;
 	int j;
-	//trovo la coordinata y dell'identificatore. Mi servirà per fare meglio le operazioni.
 
 	i = 0;
 	while (i < file->map_start_index)
@@ -24,7 +23,7 @@ void	check_id_file(t_cubfile *file)
 		//controllo se gli identificatori che ci sono sono quelli corretti, controllo solo che ci sia un spazio dopo. La path per ora non mi interessa.
 		if (((file->file_matrix[i][j] == 'N' && file->file_matrix[i][j + 1] == 'O') && ((file->file_matrix[i][j + 2] == 32) || (file->file_matrix[i][j + 2] >= 9 && file->file_matrix[i][j + 2] <= 13))) || (file->file_matrix[i][j] == 'S' && file->file_matrix[i][j + 1] == 'O' && ((file->file_matrix[i][j + 2] == 32) || (file->file_matrix[i][j + 2] >= 9 && file->file_matrix[i][j + 2] <= 13))) || (file->file_matrix[i][j] == 'W' && file->file_matrix[i][j + 1] == 'E' && ((file->file_matrix[i][j + 2] == 32) || (file->file_matrix[i][j + 2] >= 9 && file->file_matrix[i][j + 2] <= 13))) || (file->file_matrix[i][j] == 'E' && file->file_matrix[i][j + 1] == 'A' && ((file->file_matrix[i][j + 2] == 32) || (file->file_matrix[i][j + 2] >= 9 && file->file_matrix[i][j + 2] <= 13)))|| (file->file_matrix[i][j] == 'F' && ((file->file_matrix[i][j + 1] == 32) || (file->file_matrix[i][j + 1] >= 9 && file->file_matrix[i][j + 1] <= 13))) || (file->file_matrix[i][j] == 'C' && ((file->file_matrix[i][j + 1] == 32) || (file->file_matrix[i][j + 1] >= 9 && file->file_matrix[i][j + 1] <= 13))))
 		{
-			//mi segno l'index di tutti gli identificatori che ho trovato, mi serviranno in seguito per le texture. Flaggo l'identificatore, per controllare i doppi
+			//mi segno l'index e la posizione y di tutti gli identificatori che ho trovato, mi serviranno in seguito per le texture. Flaggo l'identificatore, per controllare i doppi
 			if (file->file_matrix[i][j] == 'F')
 			{
 				file->F_text_index = i;

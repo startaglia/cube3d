@@ -8,6 +8,7 @@ typedef struct cubfile
 	char	*file_path;
 	char	*buff;
 
+	t_map	*map;
 	int		fd_open;
 	int		fd_read;
 	int		matrix_start_index;
@@ -36,11 +37,15 @@ typedef struct cubfile
 	int		second_RGB_num;
 	int		third_RGB_num;
 
+	char *mapeltype[5];
+} t_cubfile;
 
+typedef struct s_map
+{
 	
 	char *mapeltype[5];
 	
 
-} t_cubfile;
+} t_map;
 
 #endif
