@@ -2,11 +2,21 @@
 
 void	init_structs(t_cubfile *file, char *str)
 {
-	//!per avere la dimensione del contenuto del file prima di aprirlo esiste fseek(che non si può usare). sto usando uno spazio di 100000 che poi libero. Capire se può andare bene.
+	file->map_s = malloc(sizeof(t_map));
+	if (file->map_s == NULL)
+	{
+    	print_err(MEM_ERROR);
+    	exit(1);
+	}
+	file->buff_str = malloc(100000);
+	if (file->buff_str == NULL)
+	{
+    	print_err(MEM_ERROR);
+    	exit(1);
+	}
+	file->lines = 0;
 	file->matrix_start_index = 0;
-	file->map_start_index = 0;
 	file->matrix_end_index = 0;
-	file->map_end_index = 0;
 	file->F_text_index = 0;
 	file->F_text_y = 0;
 	file->C_text_index = 0;
@@ -19,21 +29,21 @@ void	init_structs(t_cubfile *file, char *str)
 	file->WE_text_y = 0;
 	file->EA_text_index = 0;
 	file->EA_text_y = 0;
-	file->NO_flag = false;
-	file->SO_flag = false;
-	file->WE_flag = false;
-	file->EA_flag = false;
-	file->F_flag = false;
-	file->C_flag = false;
+	file->NO_flag = 0;
+	file->SO_flag = 0;
+	file->WE_flag = 0;
+	file->EA_flag = 0;
+	file->F_flag = 0;
+	file->C_flag = 0;
+
+	file->map_s->map_start_index = 0;
+	file->map_s->map_end_index = 0;
 
 	file->first_RGB_num = 0;
 	file->second_RGB_num = 0;
 	file->third_RGB_num = 0;
-
-
-
+	
 	file->file_path = ft_strjoin("./level/", str);
 	file->fd_open = 0;
 	file->fd_read = 0;
-	file->buff = malloc(100000);
 }

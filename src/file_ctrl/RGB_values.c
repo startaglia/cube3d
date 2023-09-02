@@ -17,7 +17,6 @@ void	check_RGB_values(t_cubfile *file)
 		}
 		i++;
 	}
-	printf("IL VALORE DI MATRIX QUI E'--> %c I INVECE VALE: %d\n", file->file_matrix[file->F_text_index][i], i);
 
 	//creo una substr che isoli solo i numeri con la virgola per poterci fare la split
 	buff_string = ft_substr(file->file_matrix[file->F_text_index], i, ( ft_strlen(file->file_matrix[file->F_text_index]) - i + 1));
@@ -46,9 +45,6 @@ void	check_RGB_values(t_cubfile *file)
 		free_matrix(num_split_comma);
 		exit(1);
 	}
-	printf("NUM1 %d\n", file->first_RGB_num);
-	printf("NUM2 %d\n", file->second_RGB_num);
-	printf("NUM3 %d\n", file->third_RGB_num);
 	free_matrix(num_split_comma);
 
 	//faccio la stessa cosa per C
@@ -64,7 +60,6 @@ void	check_RGB_values(t_cubfile *file)
 		}
 		i++;
 	}
-	printf("IL VALORE DI MATRIX QUI E'--> %c I INVECE VALE: %d\n", file->file_matrix[file->C_text_index][i], i);
 
 	//creo una substr che isoli solo i numeri con la virgola per poterci fare la split
 	buff_string = ft_substr(file->file_matrix[file->C_text_index], i, ( ft_strlen(file->file_matrix[file->C_text_index]) - i + 1));
@@ -93,9 +88,9 @@ void	check_RGB_values(t_cubfile *file)
 		free_matrix(num_split_comma);
 		exit(1);
 	}
-	printf("NUM1 %d\n", file->first_RGB_num);
-	printf("NUM2 %d\n", file->second_RGB_num);
-	printf("NUM3 %d\n", file->third_RGB_num);
+	// printf("NUM1 %d\n", file->first_RGB_num);
+	// printf("NUM2 %d\n", file->second_RGB_num);
+	// printf("NUM3 %d\n", file->third_RGB_num);
 	free_matrix(num_split_comma);
 }
 	

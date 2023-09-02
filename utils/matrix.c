@@ -11,3 +11,13 @@ void print_matrix(char **matrix)
 		i++;
 	}
 }
+
+int	matrix_lenght(char	**matrix)
+{
+	int	i;
+	
+	i = 0;
+	while (matrix[i])
+		i++;
+	return i;
+}

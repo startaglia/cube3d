@@ -16,6 +16,7 @@
 //MACROS
 //ERRORS
 # define ERROR "Error\n"
+# define MEM_ERROR "Memory allocation failed\n"
 # define OPEN_ERROR "File opening failed\n"
 # define READ_ERROR "File reading failed\n"
 # define ARG_ERR "The arguments must be two\n"
@@ -46,5 +47,9 @@ void		check_RGB_values(t_cubfile *file);
 int			ft_atoi(char *str);
 int			ft_isprint(int c);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
+void		matrix_map(t_cubfile *file);
+int			ft_isascii(int c);
+int			ft_strempt(char *s);
+int			matrix_lenght(char	**matrix);
 
 #endif
