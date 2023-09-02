@@ -2,7 +2,6 @@
 
 void	where_is_map(t_cubfile *file)
 {
-	printf("MAP END INDEX--> %d\t MATRIX END INDEX--> %d\n", file->map_s->map_end_index, file->matrix_end_index);
 	int i;
 	
 	i = file->map_s->map_end_index;

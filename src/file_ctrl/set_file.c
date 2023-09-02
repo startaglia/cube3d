@@ -141,71 +141,14 @@ void	skp_noprntbl(t_cubfile *file)
 
 void	check_indexes(t_cubfile *file)
 {
-	// int i;
-	// int	j;
-	// int flag;
-	int k;
-
-	// i = 0;
-	// j = 0;
-	// flag = 0;
 	//trovo quanto è alta la matrice
 	file->matrix_end_index = matrix_lenght(file->file_matrix);
 	
 	//trovo dove inizia la matrix_map
 	file->map_s->map_start_index = map_start_index(file);
-	k = file->map_s->map_start_index;
 
-	printf("MAP START INDEX--> %d\n", k);
-
-	//skippo tutti i non printbl nelle righe vuote tra l'ultimo identificatore e l'inizio della mappa
+	//skippo tutti i non print nelle righe vuote tra l'ultimo identificatore e l'inizio della mappa
 	skp_noprntbl(file);
-
-	// int flagEmpt = 0;
-	// while (file->file_matrix[k] && ft_strempt(file->file_matrix[k]))
-	// {
-	// 	// if (ft_str_isprint(file->file_matrix[i]))
-	// 	j = 0;
-	// 	flag = 0;
-	// 	flagEmpt = 0;
-	// 	// printf("\tMAP CHAR VALUE--> %s\n", file->file_matrix[k]);
-	// 	while (file->file_matrix[k][j])
-	// 	{
-	// 		while (file->file_matrix[k][j] && ((file->file_matrix[k][j] >= 9 && file->file_matrix[k][j] <= 13) || (file->file_matrix[k][j] == 32)))
-	// 		{
-	// 			// printf("\t\t\tCHAR VALUE--> %d\n", file->file_matrix[k][j]);
-	// 			j++;
-	// 		}
-	// 		if (!file->file_matrix[k][j])
-	// 		{
-	// 			flagEmpt = 1;
-	// 			// file->map_s->map_end_index = k - 1;
-	// 			// printf("\t\t\tVERIFICA QUI--> %d\n", file->file_matrix[k][j]);
-	// 			break;
-	// 		}
-	// 		if (file->file_matrix[k][j] == '1' || file->file_matrix[k][j] == '0' || file->file_matrix[k][j] == 'N' || file->file_matrix[k][j] == 'S' || file->file_matrix[k][j] == 'E' || file->file_matrix[k][j] == 'W')
-	// 		{
-	// 			// printf("\tSCORRO--> %c", file->file_matrix[k][j]);
-	// 			j++;
-	// 		}
-	// 		else
-	// 		{
-	// 			printf("CARATTERE SBAGLIATO\n");
-	// 			file->map_s->map_end_index = k;
-	// 			flag = 1;
-	// 			break;
-	// 		}
-	// 	}
-	// 	if (flag)
-	// 		break;
-	// 	if (flagEmpt && !file->file_matrix[k + 1])
-	// 	{
-	// 		file->map_s->map_end_index = k;
-	// 		break;
-	// 	}
-	// 	file->map_s->map_end_index = k + 1;
-	// 	k++;
-	// }
 }
 
 int count_lines(char *str)
@@ -249,30 +192,18 @@ void	check_file(t_cubfile *file, char *str)
 	//libero la mem buff che non mi serve più
 	free(file->buff_str);
 	free(file->str);
+	
 	//controllo index inizio e fine della matrice e della mappa
 	check_indexes(file);
-	// printf("MAP END INDEX QUI %d\n",file->map_s->map_end_index);
-
-
 		
 	//controllo dove si trova la mappa
 	where_is_map(file);
 
 	//controllo i valori degli identificatori
 	check_id_file(file);
-	
-	// printf("F FLAG %d\n", file->F_flag);
-	// printf("C FLAG %d\n", file->C_flag);
-	// printf("NO FLAG %d\n", file->NO_flag);
-	// printf("SO FLAG %d\n", file->SO_flag);
-	// printf("WE FLAG %d\n", file->WE_flag);
-	// printf("EA FLAG %d\n", file->EA_flag);
 
 	//controllo i valori RGB di F e C
 	check_RGB_values(file);
-	// printf("INDICE INIZIO MATRIX %d\n", file->matrix_start_index);
-	// printf("INDICE FINE MATRIX %d\n", file->matrix_end_index);
-	// printf("INDICE INIZIO MAPPA %d\n", file->map_start_index);
-	// printf("INDICE FINE MAPPA %d\n", file->map_end_index);
+
 	
 }

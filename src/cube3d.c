@@ -35,11 +35,12 @@ int main(int ac, char **av)
 	//faccio i dovuti controlli sul file.cub
 	check_file(file, av[1]);
 	//trasformo la mappa in una matrice
-	// matrix_map(file);
-	// printf("INDEX START MAP: %d\tINDEX END MAP: %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
-
-
-	// free_matrix(file->map_s->map_matrix);
+	matrix_map(file);
+	
+	
+	
+	// printf("INDICE INIZIO MATRIX %d\tINDICE FINE MATRIX %d\n", file->matrix_start_index, file->matrix_end_index);
+	// printf("INDICE INIZIO MAP %d\tINDICE FINE MAP %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
 	free(file->map_s);
 	free(file->file_path);
 	// free(file->map_s);

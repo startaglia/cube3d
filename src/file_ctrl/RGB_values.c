@@ -6,8 +6,8 @@ void	check_RGB_values(t_cubfile *file)
 	char **num_split_comma;
 	char * buff_string;
 	i = file->F_text_y + 1;
+	
 	//controllo eventuali char tra l'identificatore e il numero
-
 	while (!ft_isdigit(file->file_matrix[file->F_text_index][i]))
 	{
 		if (ft_isprint(file->file_matrix[file->F_text_index][i]))
@@ -88,9 +88,6 @@ void	check_RGB_values(t_cubfile *file)
 		free_matrix(num_split_comma);
 		exit(1);
 	}
-	// printf("NUM1 %d\n", file->first_RGB_num);
-	// printf("NUM2 %d\n", file->second_RGB_num);
-	// printf("NUM3 %d\n", file->third_RGB_num);
 	free_matrix(num_split_comma);
 }
 	

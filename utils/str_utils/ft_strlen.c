@@ -3,6 +3,9 @@
 size_t
 	ft_strlen(const char *s)
 {
+	if (s == NULL)
+		return (0);
+
 	size_t	i;
 
 	i = 0;
