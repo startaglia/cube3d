@@ -5,7 +5,7 @@ void	where_is_map(t_cubfile *file)
 	int i;
 	
 	i = file->map_s->map_end_index;
-	while (file->file_matrix[i])
+	while (file->file_matrix[i] && !ft_strempt(file->file_matrix[i]))
 	{
 		if (ft_strempt(file->file_matrix[i]))
 		{

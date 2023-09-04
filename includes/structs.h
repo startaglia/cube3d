@@ -9,6 +9,11 @@ typedef struct s_map
 	int		map_end_index;
 	int		map_widht;
 	int		map_height;
+	int		or_dir;
+	int		ver_dir;
+	int		or_coming_dir;
+	int		ver_coming_dir;
+	int		flying_pipe;
 	
 } t_map;
 typedef struct cubfile

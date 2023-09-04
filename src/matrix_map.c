@@ -59,7 +59,7 @@ void	matrix_map(t_cubfile *file)
 	curr_ind= 0;
 	map_ind = file->map_s->map_start_index;
 	//calcolo l'altezza della matrice map e malloco mem
-	num_rows = (file->map_s->map_end_index - file->map_s->map_start_index) + 1;
+	num_rows = (file->map_s->map_end_index - file->map_s->map_start_index) + 2;
 	file->map_s->map_matrix = malloc((num_rows * sizeof(char *)) + 1);
 
 	// Inizializza tutt a NULL
@@ -69,13 +69,13 @@ void	matrix_map(t_cubfile *file)
 		 curr_ind++;
 	}
 	curr_ind = 0;
-	//ciclo per riempire la matrix map 
-	while (curr_ind < (int)num_rows && ft_strempt(file->file_matrix[map_ind]))
+	//ciclo per riempire la matrix map
+	while (file->file_matrix[map_ind] && (curr_ind < (int)num_rows) && (ft_strempt(file->file_matrix[map_ind])))
 	{
 		buff_len =ft_strlen(file->file_matrix[map_ind]) + 1;
 		buff_ind = 0;
 		//malloco mem per la stringa su cui sto ciclando
-		file->map_s->map_matrix[curr_ind] = malloc(buff_len * sizeof(char));
+		file->map_s->map_matrix[curr_ind] = malloc(buff_len * sizeof(char) + 1);
 		//riempio char per char la stringa
 		while (buff_ind < buff_len)
 		{
@@ -87,6 +87,8 @@ void	matrix_map(t_cubfile *file)
 		curr_ind++;
 		map_ind++;
 	}
+	curr_ind--;
+	// file->map_s->map_matrix[curr_ind] = 0;
 	printf("-----------------MATRICE-----------------\n");
 }
 

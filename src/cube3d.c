@@ -36,6 +36,8 @@ int main(int ac, char **av)
 	check_file(file, av[1]);
 	//trasformo la mappa in una matrice
 	matrix_map(file);
+	//controllo che la mappa sia circondata da 1
+	surrounded_map_check(file);
 	
 
 	
@@ -43,7 +45,7 @@ int main(int ac, char **av)
 	
 	printf("INDICE INIZIO MATRIX %d\tINDICE FINE MATRIX %d\n", file->matrix_start_index, file->matrix_end_index);
 	printf("INDICE INIZIO MAP %d\tINDICE FINE MAP %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
-	print_matrix(file->map_s->map_matrix);
+	// print_matrix(file->map_s->map_matrix);
 
 	free_matrix(file->map_s->map_matrix);
 	free(file->map_s);

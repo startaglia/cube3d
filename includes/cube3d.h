@@ -14,6 +14,7 @@
 # include <stdbool.h>
 
 //MACROS
+
 //ERRORS
 # define ERROR "Error\n"
 # define MEM_ERROR "Memory allocation failed\n"
@@ -29,6 +30,24 @@
 # define MAP_POS_ERR "The map must be the last element on file\n"
 # define MAP_VAL_ERR "Invalid value inside the map\n"
 # define MAP_CLOSURE_ERR "The map must be surronded by walls\n"
+
+
+
+/*directions:
+or--> orizontal
+ver--> vertical
+or_dir == 0 --> from left to right
+or_dir == 1 --> from right to left
+ver_dir == 0 --> from top to bottom
+ver_dir == 1 --> from bottom to top
+
+coming dir
+or_coming_dir == 0 ---> left
+or_coming_dir == 1 ---> right
+ver_coming_dir == 0 ---> top
+ver_coming_dir == 1 ---> bottom
+*/
+
 
 //FUNCTIONS
 void		print_err(char *err);
@@ -54,5 +73,5 @@ int			ft_strempt(char *s);
 int			matrix_lenght(char	**matrix);
 void		skp_noprntbl(t_cubfile *file);
 int			ft_strempt(char *s);
-
+void		surrounded_map_check(t_cubfile *file);
 #endif
