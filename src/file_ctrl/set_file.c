@@ -1,47 +1,5 @@
 # include "../../includes/cube3d.h"
 
-int	check_format_file(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	i -= 1;
-	while (1)
-	{
-		if (str[i] == 'b')
-			i--;
-		if (str[i] == 'u')
-			i--;
-		if (str[i] == 'c')
-			i--;
-		if (str[i] == '.')
-			return 0;
-		print_err(EXT_FILE_ERR);
-		return 1;
-	}
-}
-
-void	open_read_file(t_cubfile *file)
-{
-	file->fd_open = open(file->file_path, O_RDONLY);
-	if (file->fd_open == -1)
-	{
-		print_err(OPEN_ERROR);
-		free(file->file_path);
-		free(file->buff_str);
-		exit(1);
-	}
-	file->fd_read = read(file->fd_open, file->buff_str, 1000000);
-	if (file->fd_read == -1)
-	{
-		print_err(READ_ERROR);
-		free(file->file_path);
-		free(file->buff_str);
-		exit(1);
-	}
-}
 //ritorna 0 se la stringa contiene solo char non printable
 int	ft_strempt(char *s)
 {
@@ -63,37 +21,6 @@ int	ft_strempt(char *s)
 	return 0;
 }
 
-int	map_start_index(t_cubfile *file)
-{
-	int i;
-	int	j;
-	int	res;
-
-	i = 0;
-	j = 0;
-	res = 0;
-	while (file->file_matrix[i])
-	{
-		j = 0;
-		while (file->file_matrix[i][j] && ft_isprint(file->file_matrix[i][j]))
-		{
-			while (((file->file_matrix[i][j] >= 9 && file->file_matrix[i][j] <= 13) || (file->file_matrix[i][j] == 32)))
-				j++;
-			if (ft_isprint(file->file_matrix[i][j]) && ((file->file_matrix[i][j] == 'F') || (file->file_matrix[i][j] == 'C' )|| (file->file_matrix[i][j] == 'N') || (file->file_matrix[i][j] == 'S') || (file->file_matrix[i][j] == 'E') || (file->file_matrix[i][j] == 'W')))
-				break;
-			else
-			{
-				res = i;
-				break;
-			}
-			j++;
-		}
-		if (res != 0)
-			break;
-		i++;
-	}
-	return res;
-}
 
 void	skp_noprntbl(t_cubfile *file)
 {
@@ -137,6 +64,82 @@ void	skp_noprntbl(t_cubfile *file)
 		file->map_s->map_end_index = i + 1;
 		i++;
 	}
+}
+
+int	check_format_file(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	i -= 1;
+	while (1)
+	{
+		if (str[i] == 'b')
+			i--;
+		if (str[i] == 'u')
+			i--;
+		if (str[i] == 'c')
+			i--;
+		if (str[i] == '.')
+			return 0;
+		print_err(EXT_FILE_ERR);
+		return 1;
+	}
+}
+
+void	open_read_file(t_cubfile *file)
+{
+	file->fd_open = open(file->file_path, O_RDONLY);
+	if (file->fd_open == -1)
+	{
+		print_err(OPEN_ERROR);
+		free(file->file_path);
+		free(file->buff_str);
+		exit(1);
+	}
+	file->fd_read = read(file->fd_open, file->buff_str, 1000000);
+	if (file->fd_read == -1)
+	{
+		print_err(READ_ERROR);
+		free(file->file_path);
+		free(file->buff_str);
+		exit(1);
+	}
+}
+
+
+int	map_start_index(t_cubfile *file)
+{
+	int i;
+	int	j;
+	int	res;
+
+	i = 0;
+	j = 0;
+	res = 0;
+	while (file->file_matrix[i])
+	{
+		j = 0;
+		while (file->file_matrix[i][j] && ft_strempt(file->file_matrix[i]))
+		{
+			while (((file->file_matrix[i][j] >= 9 && file->file_matrix[i][j] <= 13) || (file->file_matrix[i][j] == 32)))
+				j++;
+			if (ft_isprint(file->file_matrix[i][j]) && ((file->file_matrix[i][j] == 'F') || (file->file_matrix[i][j] == 'C' )|| (file->file_matrix[i][j] == 'N') || (file->file_matrix[i][j] == 'S') || (file->file_matrix[i][j] == 'E') || (file->file_matrix[i][j] == 'W')))
+				break;
+			else
+			{
+				res = i;
+				break;
+			}
+			j++;
+		}
+		if (res != 0)
+			break;
+		i++;
+	}
+	return res;
 }
 
 void	check_indexes(t_cubfile *file)
@@ -188,7 +191,6 @@ void	check_file(t_cubfile *file, char *str)
 	file->str = ft_substr(file->buff_str, 0, j);
 	//metto il contenuto del file in una matrix con split
 	file->file_matrix = ft_split(file->str, '\n');
-	print_matrix(file->file_matrix);
 	//libero la mem buff che non mi serve più
 	free(file->buff_str);
 	free(file->str);
@@ -204,6 +206,4 @@ void	check_file(t_cubfile *file, char *str)
 
 	//controllo i valori RGB di F e C
 	check_RGB_values(file);
-
-	
 }

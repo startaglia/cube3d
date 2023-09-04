@@ -39,6 +39,7 @@ int			ft_isdigit(int c);
 char		**ft_split(char const *s, char c);
 void		free_matrix(char **matrix);
 void		print_matrix(char **matrix);
+void		print_matrix_char(char **matrix);
 void		init_structs(t_cubfile *file, char *str);
 void		where_is_map(t_cubfile *file);
 void		check_indexes(t_cubfile *file);
@@ -51,5 +52,7 @@ void		matrix_map(t_cubfile *file);
 int			ft_isascii(int c);
 int			ft_strempt(char *s);
 int			matrix_lenght(char	**matrix);
+void		skp_noprntbl(t_cubfile *file);
+int			ft_strempt(char *s);
 
 #endif

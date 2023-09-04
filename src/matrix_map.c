@@ -39,86 +39,55 @@ char	*ft_strcpy(char *dest, char *src)
 }
 
 
-
-
-
-
-//QUESTA FUNZIONE È DI BARD. SOTTO LA MIA. QUESTA COSI ORA DA SOLO UN LEAKS CHE DOVREI RIUSCIRE A TOGLIERE. IL PROBLEMA È PERÒ NON FUNZIONA. PERÒ FORSE UNO DEI PROBLEMI È LA STRINGA CHE È TROPPO LUNGA DELLO SPAZIO IN MEMORIA. RIPARTIRE STUDIANDO QUESTA
+void	check_mem(size_t size)
+{
+	printf("MEMORIA ALLOCATA--> %zu\n", size * sizeof(char));
+}
 
 void	matrix_map(t_cubfile *file)
 {
-	int i;
-	// char *str;
+	//iteratore ciclo fuori
+	int curr_ind;
+	//iteratore per la stringa di file.matrix
+	int	map_ind;
+	//lunghezza della stringa a cui sta puntando file.matrix
 	size_t buff_len;
-
-	i = 0;
-	// Calcola il numero di righe nella matrice
-	size_t num_rows = file->map_s->map_end_index - file->map_s->map_start_index;
-	printf("INDICE INIZIO MAP %d\tINDICE FINE MAP %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
-
-	printf("NUM ROWS %ld\n", num_rows);
-
-
-
-
-
-
-
-
-	// Malloca mem
+	//iteratore per la stringa di matrix.map
+	size_t buff_ind;
+	size_t	num_rows;
+	
+	curr_ind= 0;
+	map_ind = file->map_s->map_start_index;
+	//calcolo l'altezza della matrice map e malloco mem
+	num_rows = (file->map_s->map_end_index - file->map_s->map_start_index) + 1;
 	file->map_s->map_matrix = malloc((num_rows * sizeof(char *)) + 1);
 
-	// Inizializza tutti i puntatori a NULL
-	while (i < (int)num_rows)
+	// Inizializza tutt a NULL
+	while (curr_ind < (int)num_rows)
 	{
-		 file->map_s->map_matrix[i] = NULL;
-		 i++;
+		 file->map_s->map_matrix[curr_ind] = NULL;
+		 curr_ind++;
 	}
-	i = 0;
-	
-	int curr_ind = 0;
-	int mp_ind = file->map_s->map_start_index;
-	size_t buff_ind = 0;
-	buff_len = 0;
-	// printf("LEN-->%s\n", file->file_matrix[k]);
-	printf("mp_INdex-->%d\n",mp_ind);
-	printf("valore a cui punta mp_ind--->%s\n", file->file_matrix[mp_ind]);
-	while (1)
+	curr_ind = 0;
+	//ciclo per riempire la matrix map 
+	while (curr_ind < (int)num_rows && ft_strempt(file->file_matrix[map_ind]))
 	{
-		buff_len = ft_strlen(file->file_matrix[mp_ind]);
+		buff_len =ft_strlen(file->file_matrix[map_ind]) + 1;
 		buff_ind = 0;
-
-		printf("lunghezza stringa di adesso-->%ld\n", buff_len);
-		if (buff_len > 113)
-		{
-			printf("stringa troppo lunga\n");
-			break;
-		}
-		if (buff_len > sizeof(char *))
-		{
-			printf("string too long\n");
-			return;
-		}
+		//malloco mem per la stringa su cui sto ciclando
 		file->map_s->map_matrix[curr_ind] = malloc(buff_len * sizeof(char));
+		//riempio char per char la stringa
 		while (buff_ind < buff_len)
 		{
-			file->map_s->map_matrix[curr_ind][buff_ind] = file->file_matrix[mp_ind][buff_ind];
-			// printf("%c", file->map_s->map_matrix[curr_ind][buff_ind]);
-			// printf("BUFF_IND-->%ld\n", buff_ind);
-			
+			file->map_s->map_matrix[curr_ind][buff_ind] = file->file_matrix[map_ind][buff_ind];
 			buff_ind++;
 		}
-		// printf("\n");
-		
-			if (mp_ind == file->map_s->map_end_index)
-				break;
+		buff_ind--;
+		file->map_s->map_matrix[curr_ind][buff_ind] = '\0';
 		curr_ind++;
-		mp_ind++;
-		i++;
+		map_ind++;
 	}
-	printf("VALORE IN MATRICE--->%s\n", file->map_s->map_matrix[curr_ind]);
-	free_matrix(file->map_s->map_matrix);
-
+	printf("-----------------MATRICE-----------------\n");
 }
 
 

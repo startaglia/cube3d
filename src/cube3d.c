@@ -37,13 +37,17 @@ int main(int ac, char **av)
 	//trasformo la mappa in una matrice
 	matrix_map(file);
 	
+
 	
 	
-	// printf("INDICE INIZIO MATRIX %d\tINDICE FINE MATRIX %d\n", file->matrix_start_index, file->matrix_end_index);
-	// printf("INDICE INIZIO MAP %d\tINDICE FINE MAP %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
+	
+	printf("INDICE INIZIO MATRIX %d\tINDICE FINE MATRIX %d\n", file->matrix_start_index, file->matrix_end_index);
+	printf("INDICE INIZIO MAP %d\tINDICE FINE MAP %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
+	print_matrix(file->map_s->map_matrix);
+
+	free_matrix(file->map_s->map_matrix);
 	free(file->map_s);
 	free(file->file_path);
-	// free(file->map_s);
 	free_matrix(file->file_matrix);
 	free(file);
 
