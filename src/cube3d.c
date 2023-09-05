@@ -36,8 +36,9 @@ int main(int ac, char **av)
 	check_file(file, av[1]);
 	//trasformo la mappa in una matrice
 	matrix_map(file);
-	//controllo che la mappa sia circondata da 1
-	surrounded_map_check(file);
+	//inizio con algoritmo shield map
+	// // surrounded_map_check(file);
+	// check_shield_map
 	
 
 	

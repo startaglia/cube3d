@@ -7,6 +7,8 @@ void	where_is_map(t_cubfile *file)
 	i = file->map_s->map_end_index;
 	while (file->file_matrix[i] && !ft_strempt(file->file_matrix[i]))
 	{
+		// printf("VALUE %s\tI-->%d\n", file->file_matrix[i], i);
+
 		if (ft_strempt(file->file_matrix[i]))
 		{
 			print_err(MAP_POS_ERR);

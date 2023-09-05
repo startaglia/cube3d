@@ -30,8 +30,15 @@ void	skp_noprntbl(t_cubfile *file)
 	int	empt_flag;
 
 	i = file->map_s->map_start_index;
+
+
+	print_matrix_char(file->file_matrix);
+
 	while (file->file_matrix[i] && ft_strempt(file->file_matrix[i]))
 	{
+		
+		printf("STREMPT %d\n", ft_strempt(file->file_matrix[i]));
+		printf("VALUE %s\tI-->%d\n", file->file_matrix[i], i);
 		j = 0;
 		empt_flag = 0;
 		wrong_flag = 0;
@@ -48,14 +55,21 @@ void	skp_noprntbl(t_cubfile *file)
 				j++;
 			else
 			{
-				printf("CARATTERE SBAGLIATO\n");
 				file->map_s->map_end_index = i;
 				wrong_flag = 1;
 				break;
 			}
 		}
 		if (wrong_flag)
-			break;
+		{
+			print_err("CAZZO");
+			// free_matrix(file->map_s->map_matrix);
+			// free(file->map_s);
+			// free(file->file_path);
+			// free_matrix(file->file_matrix);
+			// free(file);
+			exit(1);
+		}
 		if (empt_flag && !file->file_matrix[i + 1])
 		{
 			file->map_s->map_end_index = i;
@@ -184,9 +198,15 @@ void	check_file(t_cubfile *file, char *str)
 	//?CREAZIONE MATRICE DEL CONTENUTO FILE
 	//conto da quante linee è composta la stringa
 	file->lines = count_lines(file->buff_str);
+	printf("LINES %d\n", file->lines);
+
+
 	//avendo aperto 100000 di mem buff mi serve contare quanti sono i char ascii
 	while (ft_isascii(file->buff_str[j]))
 		j++;
+	printf("J %d\n", j);
+
+	
 	//creo una substring di tutti i caratteri che sono ascii
 	file->str = ft_substr(file->buff_str, 0, j);
 	//metto il contenuto del file in una matrix con split

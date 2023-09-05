@@ -9,7 +9,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include <mlx.h>
+// # include <mlx.h>
 # include <math.h>
 # include <stdbool.h>
 
