@@ -32,13 +32,13 @@ void	skp_noprntbl(t_cubfile *file)
 	i = file->map_s->map_start_index;
 
 
-	print_matrix_char(file->file_matrix);
+	// print_matrix_char(file->file_matrix);
 
 	while (file->file_matrix[i] && ft_strempt(file->file_matrix[i]))
 	{
 		
-		printf("STREMPT %d\n", ft_strempt(file->file_matrix[i]));
-		printf("VALUE %s\tI-->%d\n", file->file_matrix[i], i);
+		// printf("STREMPT %d\n", ft_strempt(file->file_matrix[i]));
+		// printf("VALUE %s\tI-->%d\n", file->file_matrix[i], i);
 		j = 0;
 		empt_flag = 0;
 		wrong_flag = 0;
@@ -198,19 +198,75 @@ void	check_file(t_cubfile *file, char *str)
 	//?CREAZIONE MATRICE DEL CONTENUTO FILE
 	//conto da quante linee è composta la stringa
 	file->lines = count_lines(file->buff_str);
-	printf("LINES %d\n", file->lines);
-
-
+	// printf("LINES %d\n", file->lines);
 	//avendo aperto 100000 di mem buff mi serve contare quanti sono i char ascii
 	while (ft_isascii(file->buff_str[j]))
 		j++;
-	printf("J %d\n", j);
+	// printf("J %d\n", j);
 
-	
 	//creo una substring di tutti i caratteri che sono ascii
 	file->str = ft_substr(file->buff_str, 0, j);
+	
+
+	int k = 0;
+	int l = 0;
+	int old_l = 0;
+
+	printf("STRINGONA--> %s\n", file->str);
+	printf("LINES %d\n", file->lines);
+
+
+	file->file_matrix = malloc(sizeof(char *) * (file->lines + 1));
+	
+	// Inizializza tutt a NULL
+	// while (k < file->lines)
+	// {
+	// 	 file->file_matrix[k] = NULL;
+	// 	 k++;
+	// }
+	int b = 0;
+	k = 0;
+	while(file->str[k])
+	{
+		printf("Oadssda\n");
+
+		old_l = k - l;
+		l++;
+		// e = k;
+		//mi fermo al \n
+		if (file->str[k] == 10)
+		{
+			printf("OLD_L %d\n", old_l);
+			printf("OLD_L VALUE %d\n", file->str[k]);
+
+			printf("LUNGHGEZZA STRINGA %d\n", l);
+			file->file_matrix[b] = malloc(sizeof(char) * (l));
+			l =  0;
+			b++;
+			printf("\n");
+
+
+			// devo ciclare l volte
+			// while(h < l)
+			// {
+			// 	// il dove sono arrivato - 
+			// 	file->file_matrix[h] = file->str[h];
+			// 	e++;
+			// 	h++;
+			// }
+		// 	file->file_matrix[l] = 0;
+		// 	// e = 0;
+		// 	h = 0;
+		// 	l = 0;
+		// }
+		// else
+		}
+			k++;
+	}
+
+
 	//metto il contenuto del file in una matrix con split
-	file->file_matrix = ft_split(file->str, '\n');
+	// file->file_matrix = ft_split(file->str, '\n');
 	//libero la mem buff che non mi serve più
 	free(file->buff_str);
 	free(file->str);
