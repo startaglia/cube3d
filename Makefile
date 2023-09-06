@@ -6,14 +6,14 @@
 #    By: startagl <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/28 21:52:59 by startagl          #+#    #+#              #
-#    Updated: 2023/08/29 17:36:49 by startagl         ###   ########.fr        #
+#    Updated: 2023/09/06 09:47:03 by startagl         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME        = cube3d
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS      = -Wall -Wextra -Werror -g #-fsanitize=address
 SRC_DIR     = src
 UTILS_DIR   = utils
 STR_UTILS_DIR = $(UTILS_DIR)/str_utils
