@@ -55,6 +55,7 @@ void		check_file(t_cubfile *file, char *str);
 char		*ft_strjoin(char const *s1, char const *s2);
 size_t		ft_strlen(const char *s);
 int			ft_isdigit(int c);
+char		*ft_strdup(const char *s);
 char		**ft_split(char const *s, char c);
 void		free_matrix(char **matrix);
 void		print_matrix(char **matrix);

@@ -18,7 +18,6 @@ void print_matrix_char(char **matrix)
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (matrix[i])
 	{
 		j = 0;
