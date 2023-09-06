@@ -1,6 +1,17 @@
 # include "../includes/cube3d.h"
 
-void print_matrix(char **matrix)
+char	**init_matrix_null(char **matrix, int	len)
+{
+	int k = 0;
+	while (k < len)
+	{
+		 matrix[k] = NULL;
+		 k++;
+	}
+	return (matrix);
+}
+
+void	print_matrix(char **matrix)
 {
 	int i;
 
@@ -12,7 +23,7 @@ void print_matrix(char **matrix)
 	}
 }
 
-void print_matrix_char(char **matrix)
+void	print_matrix_char(char **matrix)
 {
 	int i;
 	int	j;
@@ -31,7 +42,7 @@ void print_matrix_char(char **matrix)
 	}
 }
 
-int	matrix_lenght(char	**matrix)
+int		matrix_lenght(char	**matrix)
 {
 	int	i;
 	

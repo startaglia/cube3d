@@ -21,61 +21,41 @@ int	ft_strempt(char *s)
 	return 0;
 }
 
-
-void	skp_noprntbl(t_cubfile *file)
+void	check_map_start_ind(t_cubfile *file)
 {
+	//iteratore per le stringhe di file.matrix
 	int	i;
+	//iteratore per i char di file.matrix
 	int	j;
-	int wrong_flag;
-	int	empt_flag;
+	//flag se il char è consentito
+	int	f;
 
-	i = file->map_s->map_start_index;
-
-
-	// print_matrix_char(file->file_matrix);
-
-	while (file->file_matrix[i] && ft_strempt(file->file_matrix[i]))
+	i = 0;
+	j = 0;
+	f = 0;
+	while (file->file_matrix[i])
 	{
-
-		// printf("STREMPT %d\n", ft_strempt(file->file_matrix[i]));
-		// printf("VALUE %s\tI-->%d\n", file->file_matrix[i], i);
 		j = 0;
-		empt_flag = 0;
-		wrong_flag = 0;
 		while (file->file_matrix[i][j])
 		{
-			while (file->file_matrix[i][j] && ((file->file_matrix[i][j] >= 9 && file->file_matrix[i][j] <= 13) || (file->file_matrix[i][j] == 32)))
-				j++;
-			if (!file->file_matrix[i][j])
+			//entra qui solo se è un char consentito dalla mappa
+			if (file->file_matrix[i][j] == '1' || file->file_matrix[i][j] == '0' || file->file_matrix[i][j] == 'N' || file->file_matrix[i][j] == 'S' || file->file_matrix[i][j] == 'E' || file->file_matrix[i][j] == 'W' || (file->file_matrix[i][j] == 9) || (file->file_matrix[i][j] > 10 && file->file_matrix[i][j] <= 13) || (file->file_matrix[i][j] == 32))
 			{
-				empt_flag = 1;
-				break;
-			}
-			if (file->file_matrix[i][j] == '1' || file->file_matrix[i][j] == '0' || file->file_matrix[i][j] == 'N' || file->file_matrix[i][j] == 'S' || file->file_matrix[i][j] == 'E' || file->file_matrix[i][j] == 'W')
+				f = 1;
 				j++;
+			}
+			//se entra qua non è inizio mappa, esco dal cilo while interno e posso andare alla prox i
 			else
 			{
-				file->map_s->map_end_index = i;
-				wrong_flag = 1;
+				f = 0;
 				break;
 			}
 		}
-		if (wrong_flag)
+		if (f)
 		{
-			print_err("CAZZO");
-			// free_matrix(file->map_s->map_matrix);
-			// free(file->map_s);
-			// free(file->file_path);
-			// free_matrix(file->file_matrix);
-			// free(file);
-			exit(1);
-		}
-		if (empt_flag && !file->file_matrix[i + 1])
-		{
-			file->map_s->map_end_index = i;
+			file->map_s->map_start_index = i;
 			break;
 		}
-		file->map_s->map_end_index = i + 1;
 		i++;
 	}
 }
@@ -123,49 +103,24 @@ void	open_read_file(t_cubfile *file)
 	}
 }
 
-
-int	map_start_index(t_cubfile *file)
-{
-	int i;
-	int	j;
-	int	res;
-
-	i = 0;
-	j = 0;
-	res = 0;
-	while (file->file_matrix[i])
-	{
-		j = 0;
-		while (file->file_matrix[i][j] && ft_strempt(file->file_matrix[i]))
-		{
-			while (((file->file_matrix[i][j] >= 9 && file->file_matrix[i][j] <= 13) || (file->file_matrix[i][j] == 32)))
-				j++;
-			if (ft_isprint(file->file_matrix[i][j]) && ((file->file_matrix[i][j] == 'F') || (file->file_matrix[i][j] == 'C' )|| (file->file_matrix[i][j] == 'N') || (file->file_matrix[i][j] == 'S') || (file->file_matrix[i][j] == 'E') || (file->file_matrix[i][j] == 'W')))
-				break;
-			else
-			{
-				res = i;
-				break;
-			}
-			j++;
-		}
-		if (res != 0)
-			break;
-		i++;
-	}
-	return res;
-}
-
 void	check_indexes(t_cubfile *file)
 {
 	//trovo quanto è alta la matrice
 	file->matrix_end_index = matrix_lenght(file->file_matrix);
 
-	//trovo dove inizia la matrix_map
-	file->map_s->map_start_index = map_start_index(file);
+	
+	//controllare i valori degli id
+	check_id_values(file);
+	
+	//trovo l'indice di dove inizia la mappa
+	check_map_start_ind(file);
 
-	//skippo tutti i non print nelle righe vuote tra l'ultimo identificatore e l'inizio della mappa
-	skp_noprntbl(file);
+	//trovo dove finisce la mappa
+
+
+	//verifico che la mappa sia l'ultimo elemento
+	// file->map_s->map_start_index = map_start_index(file);
+
 }
 
 int count_lines(char *str)
@@ -184,6 +139,42 @@ int count_lines(char *str)
     return count;
 }
 
+void	fill_file_matrix(t_cubfile *file)
+{
+	//iteratore file.str
+	int i;
+	//lunghezza stringa fino a \n
+	int l;
+	//punto di partenza per ogni stringa della matrice
+	int old_l;
+	//iteratore delle stringhe di file_matrix
+	int b;
+
+	b = 0;
+	l = 0;
+	i = 0;
+	old_l = 0;
+	while (file->str[i])
+	{
+		old_l = i;
+		l = 0;
+
+		// mi trovo la lunghezza della stringa di ora (l)
+		while (file->str[i] != 10 && file->str[i])
+		{
+			i++;
+			l++;
+		}
+		if (l == 0)
+			file->file_matrix[b] = ft_substr(file->str, old_l, 1);
+		else
+			file->file_matrix[b] = ft_substr(file->str, old_l, l);
+		b++;
+		i++;
+	}
+	file->file_matrix[b] = 0;
+}
+
 void	check_file(t_cubfile *file, char *str)
 {
 	int j;
@@ -195,82 +186,34 @@ void	check_file(t_cubfile *file, char *str)
 	//apro e leggo il file
 	open_read_file(file);
 
-	//?CREAZIONE MATRICE DEL CONTENUTO FILE
 	//conto da quante linee è composta la stringa
 	file->lines = count_lines(file->buff_str);
-	printf("LINES %d\n", file->lines);
 	//avendo aperto 100000 di mem buff mi serve contare quanti sono i char ascii
 	while (ft_isascii(file->buff_str[j]))
 		j++;
-	printf("J %d\n", j);
-	// printf("MOSTRO \n%s", file->buff_str);
-
 	//creo una substring di tutti i caratteri che sono ascii
 	file->str = ft_substr(file->buff_str, 0, j + 1);
+	//!FORSE A SANITAZER PIACE
 	file->str[j] = 0;
-	// printf("\t-----STRINGONA----\n%s\n\n", file->str);
 
 	//malloco la matrice
 	file->file_matrix = malloc(sizeof(char *) * (file->lines + 1));
-
-	//iteratore stringona
-	int k = 0;
-	// Inizializza tutt a NULL
-	while (k < file->lines)
-	{
-		 file->file_matrix[k] = NULL;
-		 k++;
-	}
-	k = 0;
-	//lunghezza stringa fino a \n
-	int l = 0;
-	//punto di partenza per ogni stringa della matrice
-	int old_l = 0;
-	//iteratore delle stringhe di file_matrix
-	int b = 0;
-	while (file->str[k])
-	{
-		old_l = k;
-		l = 0;
-
-		// mi trovo la lunghezza della stringa di ora (l)
-		while (file->str[k] != 10 && file->str[k])
-		{
-			k++;
-			l++;
-		}
-		if (l == 0)
-			file->file_matrix[b] = ft_substr(file->str, old_l, 1);
-		else
-			file->file_matrix[b] = ft_substr(file->str, old_l, l);
-
-		// printf("str[k]STRINGA %s\n", file->file_matrix[b]);
-		// //devo fare la substr k - 1 volte partendo da k
-		// printf("*************\n");
-		// print_matrix_char(file->file_matrix);
-		// printf("\n*************\n");
-		// printf("\n++++++++++++++++++++++++++\n");
-
-		// printf("\n++++++++++++++++++++++++++\n\n");
-		b++;
-		k++;
-	}
-	file->file_matrix[b] = 0;
-	print_matrix_char(file->file_matrix);
-	printf("-----------------------------------\n");
+	file->file_matrix = init_matrix_null(file->file_matrix, file->lines);
+	fill_file_matrix(file);
+	// print_matrix_char(file->file_matrix);
 
 	//libero la mem buff che non mi serve più
 	free(file->buff_str);
 	free(file->str);
 
-	// //controllo index inizio e fine della matrice e della mappa
-	// check_indexes(file);
+	// controllo index inizio e fine della matrice e della mappa
+	check_indexes(file);
 
 	// //controllo dove si trova la mappa
 	// where_is_map(file);
 
 	// //controllo i valori degli identificatori
-	// check_id_file(file);
+	
 
 	// //controllo i valori RGB di F e C
 	// check_RGB_values(file);
