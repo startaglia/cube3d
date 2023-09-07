@@ -1,5 +1,10 @@
 # include "../includes/cube3d.h"
 
+void	check_mem(size_t size)
+{
+	printf("MEMORIA ALLOCATA--> %zu\n", size * sizeof(char));
+}
+
 char	**init_matrix_null(char **matrix, int	len)
 {
 	int k = 0;

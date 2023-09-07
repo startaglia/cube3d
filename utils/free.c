@@ -10,5 +10,7 @@ void free_matrix(char **matrix)
 		free(matrix[i]);
 		i++;
 	}
+	free(matrix[i]);
+
 	free(matrix);
 }

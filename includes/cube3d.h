@@ -64,7 +64,6 @@ void		init_structs(t_cubfile *file, char *str);
 char		**init_matrix_null(char **matrix, int	len);
 void		where_is_map(t_cubfile *file);
 void		check_indexes(t_cubfile *file);
-void		check_space_before_id(t_cubfile *file);
 void		check_RGB_values(t_cubfile *file);
 int			ft_atoi(char *str);
 int			ft_isprint(int c);

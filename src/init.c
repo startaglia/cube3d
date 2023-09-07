@@ -38,6 +38,7 @@ void	init_structs(t_cubfile *file, char *str)
 
 	file->map_s->map_start_index = 0;
 	file->map_s->map_end_index = 0;
+	file->map_s->map_height = 0;
 	file->map_s->or_dir = 0;
 	file->map_s->or_coming_dir = 0;
 	file->map_s->ver_dir = 0;
