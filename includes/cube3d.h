@@ -25,6 +25,7 @@
 # define IDENTIFIER_SYNT_ERR "Invalid identifier syntax\n"
 # define MISSING_IDENTIFIER_ERR "Missing identifier\n"
 # define MORE_IDENTIFIER_ERR "Identifier must be one per type\n"
+# define RGB_VALUES_NUM "The RGB values must be 3\n"
 # define RGB_VALUE_ERR "Invalid RGB value\n"
 # define RGB_RANGE_ERR "out or RGB range\n"
 # define MAP_POS_ERR "The map must be the last element on file\n"

@@ -133,45 +133,22 @@ int	check_map_last_elem(t_cubfile	*file)
 	i = file->map_s->map_end_index;
 	j = 0;
 	map_len = file->map_s->map_height - 1;
-	// printf("STRINGA filematrix %s\n", file->file_matrix[i - 1]);
-	// printf("STRINGA map%s\n", file->map_s->map_matrix[i - 1]);
-
-		printf("LAST IND MAP MATRIX--> %d\n", file->map_s->map_end_index);
-		printf("LAST IND FILE MATRIX--> %d\n", file->matrix_end_index);
-		printf("MAP MATRIX HEIGHT--> %d\n", file->map_s->map_height);
-
-		printf("I--> %d\n", i);
-
-
-	// 	printf("ULTIMA STRINGA DI MAP--> %s\n", file->map_s->map_matrix[i]);
-
-
-	// int len = matrix_lenght(file->map_s->map_matrix);
-
 	// entra qui se la mappa e il matrix file finiscono allo stesso indice
 	if (i == file->matrix_end_index)
 	{
-
-		// i-=1;
-		printf("I--> %d\n", i);
-
-		printf("ULTIMA STRINGA DI MAP--> %c\n", file->map_s->map_matrix[map_len][j]);
-
-		while ((file->map_s->map_matrix[map_len][j] == '1' || file->map_s->map_matrix[map_len][j] == '0' || file->map_s->map_matrix[map_len][j] == 'N' || file->map_s->map_matrix[map_len][j] == 'S' || file->map_s->map_matrix[map_len][j] == 'E' || file->map_s->map_matrix[map_len][j] == 'W'))
-		{
-			printf("CHAR BUONO\n");
+		while ((file->map_s->map_matrix[map_len][j] == 9) || (file->map_s->map_matrix[map_len][j] > 10 && file->map_s->map_matrix[map_len][j] <= 13) || (file->map_s->map_matrix[map_len][j] == 32))
 			j++;
-		}
-		printf("J--> %d\n", j);
-		printf("MAP LEN--> %ld\n", ft_strlen(file->map_s->map_matrix[map_len]));
-
-		//capire che fare se l'ultima stringa della mappa ha un carattere non valido
+		while ((file->map_s->map_matrix[map_len][j] == '1' || file->map_s->map_matrix[map_len][j] == '0' || file->map_s->map_matrix[map_len][j] == 'N' || file->map_s->map_matrix[map_len][j] == 'S' || file->map_s->map_matrix[map_len][j] == 'E' || file->map_s->map_matrix[map_len][j] == 'W'))
+			j++;
+		//se arrivo all'utlimo char e tutti sono char ammessi allora l'ultima stringa è una stringa buona
 		if (j == (int)(ft_strlen(file->map_s->map_matrix[map_len])))
-			printf("LA STRING È BUONA\n");
+			return 0;
+		//qui esco perchè sicuro la stringa dopo ha un char non valido, quindi posso dare errore che la mappa non è l'ultima cosa nel file.
 		else
-			printf("LA STRINGA NON È BUONA\n");
-			
-		return 0;
+		{
+			print_err(MAP_POS_ERR);
+			exit(1);
+		}	
 	}
 	//entra qui se gli indici di fine map matrix e file matrix sono diversi, quindi ciclo su tutte le stringhe di file matrix che vengono dopo e vedo se sono vuote
 	while (i < file->matrix_end_index)
@@ -182,7 +159,6 @@ int	check_map_last_elem(t_cubfile	*file)
 			exit(1);
 		}
 		i++;
-		// j++;
 	}
 	return 0;
 }
@@ -192,7 +168,6 @@ void	check_indexes(t_cubfile *file)
 	//trovo quanto è alta la matrice
 	file->matrix_end_index = matrix_lenght(file->file_matrix);
 
-	
 	//trovo l'indice di dove inizia la mappa
 	check_map_start_ind(file);
 
@@ -201,16 +176,6 @@ void	check_indexes(t_cubfile *file)
 
 	//controllare i valori degli id
 	check_id_values(file);
-	
-	//faccio la matrice della mappa
-	matrix_map(file);
-
-	//trovo dove finisce la mappa
-	check_map_last_elem(file);
-
-	//verifico che la mappa sia l'ultimo elemento
-	// file->map_s->map_start_index = map_start_index(file);
-
 }
 
 int count_lines(char *str)
@@ -298,12 +263,12 @@ void	check_file(t_cubfile *file, char *str)
 	// controllo index inizio e fine della matrice e della mappa
 	check_indexes(file);
 
-	// //controllo dove si trova la mappa
-	// where_is_map(file);
+	//faccio la matrice della mappa
+	matrix_map(file);
 
-	// //controllo i valori degli identificatori
-	
+	//verifico che la mappa sia l' ultimo elemento del file
+	check_map_last_elem(file);
 
-	// //controllo i valori RGB di F e C
-	// check_RGB_values(file);
+	//controllo i valori RGB di F e C
+	check_RGB_values(file);
 }
