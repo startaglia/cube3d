@@ -38,7 +38,7 @@ void	check_map_start_ind(t_cubfile *file)
 		j = 0;
 		while (file->file_matrix[i][j])
 		{
-			while ((file->file_matrix[i][j] == 9) || (file->file_matrix[i][j] > 10 && file->file_matrix[i][j] <= 13) || (file->file_matrix[i][j] == 32))
+			while ((file->file_matrix[i][j]) && ((file->file_matrix[i][j] == 9) || (file->file_matrix[i][j] > 10 && file->file_matrix[i][j] <= 13) || (file->file_matrix[i][j] == 32)))
 				j++;
 			//entra qui solo se è un char consentito dalla mappa
 			if (file->file_matrix[i][j] == '1' || file->file_matrix[i][j] == '0' || file->file_matrix[i][j] == 'N' || file->file_matrix[i][j] == 'S' || file->file_matrix[i][j] == 'E' || file->file_matrix[i][j] == 'W')
@@ -46,15 +46,20 @@ void	check_map_start_ind(t_cubfile *file)
 				f = 1;
 				j++;
 			}
+
+			//!FARE BENE QUESTI CONTROLLI. PARE FUNZIONARE MA CONTROLLARE BENE
 			//se entra qua non è inizio mappa, esco dal cilo while interno e posso andare alla prox i
-			else
+			else if (file->file_matrix[i][j])
 			{
+				// printf("CHAR %d\n", file->file_matrix[i][j]);
 				f = 0;
 				break;
 			}
 		}
 		if (f)
 		{
+			printf("STR %s\n", file->file_matrix[i]);
+			printf("CHAR %d\n", file->file_matrix[i][j]);
 			file->map_s->map_start_index = i;
 			break;
 		}
@@ -136,12 +141,13 @@ int	check_map_last_elem(t_cubfile	*file)
 	// entra qui se la mappa e il matrix file finiscono allo stesso indice
 	if (i == file->matrix_end_index)
 	{
+		//skippo prima e dopo i char spazio e tab e all'interno continuo a ciclare su tutti i char buoni
 		while ((file->map_s->map_matrix[map_len][j] == 9) || (file->map_s->map_matrix[map_len][j] > 10 && file->map_s->map_matrix[map_len][j] <= 13) || (file->map_s->map_matrix[map_len][j] == 32))
 			j++;
 		while ((file->map_s->map_matrix[map_len][j] == '1' || file->map_s->map_matrix[map_len][j] == '0' || file->map_s->map_matrix[map_len][j] == 'N' || file->map_s->map_matrix[map_len][j] == 'S' || file->map_s->map_matrix[map_len][j] == 'E' || file->map_s->map_matrix[map_len][j] == 'W'))
 			j++;
 		//se arrivo all'utlimo char e tutti sono char ammessi allora l'ultima stringa è una stringa buona
-		if (j == (int)(ft_strlen(file->map_s->map_matrix[map_len])))
+		if (j == (int)(ft_strlen(file->map_s->map_matrix[map_len])) || (file->map_s->map_matrix[map_len][j] == 32) || (file->map_s->map_matrix[map_len][j] == 9) || (file->map_s->map_matrix[map_len][j] > 10 && file->map_s->map_matrix[map_len][j] <= 13))
 			return 0;
 		//qui esco perchè sicuro la stringa dopo ha un char non valido, quindi posso dare errore che la mappa non è l'ultima cosa nel file.
 		else

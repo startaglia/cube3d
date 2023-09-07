@@ -61,6 +61,8 @@ void	matrix_map(t_cubfile *file)
 	while (curr_ind <= (int)num_rows)
 	{
 		file->map_s->map_matrix[curr_ind] = ft_substr(file->file_matrix[map_ind], 0, (ft_strlen(file->file_matrix[map_ind]) + 1));
+		// printf("STRINGA DA COPIARE %s\n", file->file_matrix[map_ind]);
+		// printf("STRINGA COPIATA %s\n", file->map_s->map_matrix[curr_ind]);
 		file->map_s->map_matrix[curr_ind][ft_strlen(file->file_matrix[map_ind])] = 0;
 		curr_ind++;
 		map_ind++;

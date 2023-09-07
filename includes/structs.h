@@ -1,6 +1,20 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+/*directions:
+or--> orizontal
+ver--> vertical
+or_dir == 0 --> from left to right
+or_dir == 1 --> from right to left
+ver_dir == 0 --> from top to bottom
+ver_dir == 1 --> from bottom to top
+
+coming dir
+or_coming_dir == 0 ---> left
+or_coming_dir == 1 ---> right
+ver_coming_dir == 0 ---> top
+ver_coming_dir == 1 ---> bottom
+*/
 
 typedef struct s_map
 {
