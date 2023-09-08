@@ -36,17 +36,18 @@ int main(int ac, char **av)
 	//faccio i dovuti controlli sul file.cub
 	check_file(file, av[1]);
 	//controllo che la mappa sia circondata da 1
-	// surrounded_map_check(file);
+	surrounded_map_check(file);
 	
 
 	
 	
 	
-	// printf("INDICE INIZIO MATRIX %d\tINDICE FINE MATRIX %d\n", file->matrix_start_index, file->matrix_end_index);
-	// printf("INDICE INIZIO MAP %d\tINDICE FINE MAP %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
-	print_matrix(file->map_s->map_matrix);
-
+	printf("INDICE INIZIO MATRIX %d\tINDICE FINE MATRIX %d\n", file->matrix_start_index, file->matrix_end_index);
+	printf("INDICE INIZIO MAP %d\tINDICE FINE MAP %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
+	// print_matrix(file->map_s->map_matrix);
+	print_matrix_char(file->map_s->map_matrix);
 	free_matrix(file->map_s->map_matrix);
+	free(file->map_s->value_s);
 	free(file->map_s);
 	free(file->file_path);
 	free_matrix(file->file_matrix);

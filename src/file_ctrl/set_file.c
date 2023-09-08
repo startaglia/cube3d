@@ -47,7 +47,7 @@ void	check_map_start_ind(t_cubfile *file)
 				j++;
 			}
 
-			//!FARE BENE QUESTI CONTROLLI. PARE FUNZIONARE MA CONTROLLARE BENE
+			//!FARE BENE QUESTI CONTROLLI. PARE FUNZIONARE MA CONTROLLARE BENE. PER QUESTI CONTROLLI INTENDO GLI SPAZI SUBITO DOPO LA PRIMA STRINGA DELLA MATRICE(MI DA 0 INVECE CHE SPAZIO NON SO PERCHÈ MA FUNZIONA). IN REALTÀ FATTA LA MATRICE MAPPA I VALORI SONO CORRETTI, QUINDI 32
 			//se entra qua non è inizio mappa, esco dal cilo while interno e posso andare alla prox i
 			else if (file->file_matrix[i][j])
 			{
@@ -58,8 +58,8 @@ void	check_map_start_ind(t_cubfile *file)
 		}
 		if (f)
 		{
-			printf("STR %s\n", file->file_matrix[i]);
-			printf("CHAR %d\n", file->file_matrix[i][j]);
+			// printf("STR %s\n", file->file_matrix[i]);
+			// printf("CHAR QUI %d\n", file->file_matrix[i][j - 1]);
 			file->map_s->map_start_index = i;
 			break;
 		}

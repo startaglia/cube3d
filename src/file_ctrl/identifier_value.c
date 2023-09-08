@@ -77,8 +77,6 @@ int	check_space_before_id(t_cubfile *file)
 	int j;
 
 	i = 0;
-	printf("MAP START %d\n", file->map_s->map_start_index);
-
 	while (i < file->map_s->map_start_index)
 	{
 		// printf("STR %s\n", file->file_matrix[i]);
@@ -111,10 +109,10 @@ int	check_space_before_id(t_cubfile *file)
 			}
 			else
 			{
-				// printf("CHAR %d\n", file->file_matrix[i][j]);
+				// printf("CHAR ID %d\n", file->file_matrix[i][j]);
 				print_err(IDENTIFIER_SYNT_ERR);
-				i++;
-				// exit(1);
+				// i++;
+				exit(1);
 			}
 		}
 	}

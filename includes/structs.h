@@ -16,6 +16,28 @@ ver_coming_dir == 0 ---> top
 ver_coming_dir == 1 ---> bottom
 */
 
+
+typedef	struct s_value
+{
+	int	left_top_right_ed;
+	int	left_bott_right_ed;
+	int	top_right_bott_ed;
+	int	left_right_ed;
+	int	top_left_ed;
+	int	top_right_ed;
+	int	top_bott_ed;
+	int	right_bott_ed;
+	int	left_bott_ed;
+	int	top_ed;
+	int	right_ed;
+	int	bott_ed;
+	int	left_ed;
+	int	or_dir;
+	int	ver_dir;
+	int	or_coming_dir;
+	int	ver_coming_dir;
+}	t_value;
+
 typedef struct s_map
 {
 	char 	**map_matrix;
@@ -23,11 +45,8 @@ typedef struct s_map
 	int		map_end_index;
 	int		map_widht;
 	int		map_height;
-	int		or_dir;
-	int		ver_dir;
-	int		or_coming_dir;
-	int		ver_coming_dir;
-	int		flying_pipe;
+
+	t_value	*value_s;
 	
 } t_map;
 typedef struct cubfile
@@ -36,10 +55,7 @@ typedef struct cubfile
 	char	*file_path;
 	char	*buff_str;
 	char	*str;
-
 	int		lines;
-
-	t_map	*map_s;
 	int		fd_open;
 	int		fd_read;
 	int		matrix_start_index;
@@ -65,6 +81,7 @@ typedef struct cubfile
 	int		first_RGB_num;
 	int		second_RGB_num;
 	int		third_RGB_num;
+	t_map	*map_s;
 } t_cubfile;
 
 
