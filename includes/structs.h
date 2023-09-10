@@ -14,6 +14,8 @@ or_coming_dir == 0 ---> left
 or_coming_dir == 1 ---> right
 ver_coming_dir == 0 ---> top
 ver_coming_dir == 1 ---> bottom
+
+-1 value -->none
 */
 
 

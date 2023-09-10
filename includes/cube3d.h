@@ -63,4 +63,24 @@ int			matrix_lenght(char	**matrix);
 void		check_id_values(t_cubfile *file);
 int			ft_strempt(char *s);
 void		surrounded_map_check(t_cubfile *file);
+int			converter_tab_space(t_cubfile *file, int i, int j, int k);
+int			left_top_right_ed(t_cubfile *file, int i, int j);
+int			left_bott_right_ed(t_cubfile *file, int i, int j);
+int			top_right_bott_ed(t_cubfile *file, int i, int j);
+int			left_right_ed(t_cubfile *file, int i, int j);
+int			top_left_ed(t_cubfile *file, int i, int j);
+int			top_right_ed(t_cubfile *file, int i, int j);
+int			top_bott_ed(t_cubfile *file, int i, int j);
+int			right_bott_ed(t_cubfile *file, int i, int j);
+int			left_bott_ed(t_cubfile *file, int i, int j);
+int			top_ed(t_cubfile *file, int i, int j);
+int			right_ed(t_cubfile *file, int i, int j);
+int			bott_ed(t_cubfile *file, int i, int j);
+int			left_ed(t_cubfile *file, int i, int j);
+int			top_edge(t_cubfile *file, int i, int j);
+int			right_edge(t_cubfile *file, int i, int j);
+int			bottom_edge(t_cubfile *file, int i, int j);
+int			left_edge(t_cubfile *file, int i, int j);
+
+
 #endif

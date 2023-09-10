@@ -7,6 +7,7 @@ unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
 
 	count = 0;
 	index = 0;
+	
 	while (src[count] != '\0')
 		count++;
 	if (size != 0)

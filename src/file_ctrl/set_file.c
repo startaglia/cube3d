@@ -46,8 +46,6 @@ void	check_map_start_ind(t_cubfile *file)
 				f = 1;
 				j++;
 			}
-
-			//!FARE BENE QUESTI CONTROLLI. PARE FUNZIONARE MA CONTROLLARE BENE. PER QUESTI CONTROLLI INTENDO GLI SPAZI SUBITO DOPO LA PRIMA STRINGA DELLA MATRICE(MI DA 0 INVECE CHE SPAZIO NON SO PERCHÈ MA FUNZIONA). IN REALTÀ FATTA LA MATRICE MAPPA I VALORI SONO CORRETTI, QUINDI 32
 			//se entra qua non è inizio mappa, esco dal cilo while interno e posso andare alla prox i
 			else if (file->file_matrix[i][j])
 			{
@@ -219,7 +217,7 @@ void	fill_file_matrix(t_cubfile *file)
 	{
 		old_l = i;
 		l = 0;
-
+		// converter_tab_space(file->str[i]);
 		// mi trovo la lunghezza della stringa di ora (l)
 		while (file->str[i] != 10 && file->str[i])
 		{
@@ -252,6 +250,7 @@ void	check_file(t_cubfile *file, char *str)
 	//avendo aperto 100000 di mem buff mi serve contare quanti sono i char ascii
 	while (ft_isascii(file->buff_str[j]))
 		j++;
+	// converter_tab_space(file->buff_str, j);
 	//creo una substring di tutti i caratteri che sono ascii
 	file->str = ft_substr(file->buff_str, 0, j + 1);
 	//!FORSE A SANITAZER PIACE

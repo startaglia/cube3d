@@ -1,46 +1,5 @@
 # include "../includes/cube3d.h"
 
-// void	get_map_sizes(t_cubfile *file)
-// {
-// 	int	i;
-// 	int	j;
-	
-// 	i = file->map_s->map_start_index;
-// 	while (i < file->map_s->map_end_index)
-// 	{
-// 		j = 0;
-// 		while (file->file_matrix[i][j])
-// 		{
-// 			// printf("%c", file->file_matrix[i][j]);
-// 			j++;
-// 		}
-// 		if (file->map_s->map_widht < j)
-// 			file->map_s->map_widht = j;
-// 		// printf("\t\t\tJ: %d\n", j);
-// 		i++;
-// 	}
-// 	// printf("MAP WIDHT %d\n", file->map_s->map_widht);
-	
-// 	// file->map_s->map_widht = 
-// }
-
-// char	*ft_strcpy(char *dest, char *src)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (src[i])
-// 	{
-// 		dest[i] = src[i];
-// 		i++;
-// 	}
-// 	dest[i] = src[i];
-// 	return (dest);
-// }
-
-
-
-
 void	matrix_map(t_cubfile *file)
 {
 	//iteratore ciclo fuori
@@ -50,7 +9,7 @@ void	matrix_map(t_cubfile *file)
 	//altezza matrice
 	size_t	num_rows;
 	
-	curr_ind= 0;
+	curr_ind = 0;
 	map_ind = file->map_s->map_start_index;
 	//calcolo l'altezza della matrice map e malloco mem
 	num_rows = (((file->map_s->map_end_index) - (file->map_s->map_start_index)) - 1);
