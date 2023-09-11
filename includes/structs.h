@@ -21,6 +21,7 @@ ver_coming_dir == 1 ---> bottom
 
 typedef	struct s_value
 {
+	int	left_top_right_bott_ed;
 	int	left_top_right_ed;
 	int	left_bott_right_ed;
 	int	top_right_bott_ed;

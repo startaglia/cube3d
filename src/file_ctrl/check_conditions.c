@@ -1,27 +1,25 @@
 # include "../../includes/cube3d.h"
 
+//!IMPLEMENTARE GLI ANGOLI CONVESSI
+
+//le condizioni in cui devo controllare oltre gli edge anche gli spazi sono tutti e 4 i lati
+//! DA FARE BOTTOM E TESTARLI BENE TUTTI E 4
+
+
+
 int	top_edge(t_cubfile *file, int i, int j)
 {
 
 	// bordo superiore
-	if ((i == 0) || (i > 0 && j > (int)(ft_strlen(file->map_s->map_matrix[i - 1]) - 1))
-	|| ((i > 0 && j > (int)(ft_strlen(file->map_s->map_matrix[i - 1]) - 1)) && ((file->file_matrix[i - 1][j] == 9) || (file->file_matrix[i - 1][j] > 10 && file->file_matrix[i - 1][j] <= 13) || (file->file_matrix[i - 1][j] == 32))))
+	if ((i == 0) || (i > 0 && j > (int)(ft_strlen(file->map_s->map_matrix[i - 1]) - 1)) || ((i > 0 && j > (int)(ft_strlen(file->map_s->map_matrix[i - 1]) - 1)) && ((file->map_s->map_matrix[i - 1][j] == 9) || (file->map_s->map_matrix[i - 1][j] > 10 && file->map_s->map_matrix[i - 1][j] <= 13) || (file->map_s->map_matrix[i - 1][j] == 32))))
 		return 1;
 	// printf("\t\tDENTRO\n");
 	return 0;
 }
-// int	right_edge(t_cubfile *file, int i, int j)
-// {
-// 	//bordo destro
-// 	if (j == (int)(ft_strlen(file->map_s->map_matrix[i]) - 1))
-// 		return 1;
-// 	return 0;
-// }
 int	right_edge(t_cubfile *file, int i, int j)
 {
 	//bordo destro
-	if (j == (int)(ft_strlen(file->map_s->map_matrix[i]) - 1))
-	// || ((file->file_matrix[i][j + 1] == 9) || (file->file_matrix[i][j + 1] > 10 && file->file_matrix[i][j + 1] <= 13) || (file->file_matrix[i][j + 1] == 32)))
+	if (j == (int)(ft_strlen(file->map_s->map_matrix[i]) - 1) || ((file->map_s->map_matrix[i][j + 1] == 9) || (file->map_s->map_matrix[i][j + 1] > 10 && file->map_s->map_matrix[i][j + 1] <= 13) || (file->map_s->map_matrix[i][j + 1] == 32)))
 	{
 		return 1;
 	}
@@ -30,19 +28,78 @@ int	right_edge(t_cubfile *file, int i, int j)
 int	bottom_edge(t_cubfile *file, int i, int j)
 {
 	//bordo inferiore
-	if ((i == (file->map_s->map_height - 1)) || (j > (int)(ft_strlen(file->map_s->map_matrix[i + 1]) - 1)))
+	if (((i == (file->map_s->map_height - 1)) || (j > (int)(ft_strlen(file->map_s->map_matrix[i + 1]) - 1))) || ((file->map_s->map_matrix[i + 1][j] == 9) || (file->map_s->map_matrix[i + 1][j] > 10 && file->map_s->map_matrix[i + 1][j] <= 13) || (file->map_s->map_matrix[i + 1][j] == 32)))
 		return 1;
 	return 0;
 }
 int	left_edge(t_cubfile *file, int i, int j)
 {
-	(void) i;
-	(void) file;
 	//bordo sinistro
-	if ((j == 0 && i == 0) || (j == 0 && !((file->file_matrix[i][j] == 9) || (file->file_matrix[i][j] > 10 && file->file_matrix[i][j] <= 13) || (file->file_matrix[i][j] == 32))))
+	if ((j == 0 && i == 0) || (j == 0 && !((file->map_s->map_matrix[i][j] == 9) || (file->map_s->map_matrix[i][j] > 10 && file->map_s->map_matrix[i][j] <= 13) || (file->map_s->map_matrix[i][j] == 32))))
+	{
+		// printf("VALORE %d\n", file->map_s->map_matrix[i][j]);
 		return 1;
+	}
 	return 0;
 }
+
+int	reset_ed_flags(t_cubfile *file)
+{
+	file->map_s->value_s->left_top_right_bott_ed = 0;
+	file->map_s->value_s->left_top_right_ed = 0;
+	file->map_s->value_s->left_bott_right_ed = 0;
+	file->map_s->value_s->top_right_bott_ed = 0;
+	file->map_s->value_s->left_right_ed = 0;
+	file->map_s->value_s->top_left_ed = 0;
+	file->map_s->value_s->top_right_ed = 0;
+	file->map_s->value_s->top_bott_ed = 0;
+	file->map_s->value_s->right_bott_ed = 0;
+	file->map_s->value_s->left_bott_ed = 0;
+	file->map_s->value_s->top_ed = 0;
+	file->map_s->value_s->right_ed = 0;
+	file->map_s->value_s->bott_ed = 0;
+	file->map_s->value_s->left_ed = 0;
+	return 0;
+}
+
+int	left_top_right_bot_ed(t_cubfile *file, int i, int j)
+{
+	// printf("\ntoprightbotlefted-->%d\n", file->map_s->value_s->left_top_right_bott_ed);
+	// printf("lefttoprighted-->%d\tleftbottrighted-->%d\ttoprightbotted-->%d", file->map_s->value_s->left_top_right_ed, file->map_s->value_s->left_bott_right_ed, file->map_s->value_s->top_right_bott_ed);
+	// printf("\nleftrighted-->%d\t\ttoplefted-->%d\t\ttoprighted-->%d", file->map_s->value_s->left_right_ed, file->map_s->value_s->top_left_ed, file->map_s->value_s->top_right_ed);
+	// printf("\ntopbotted-->%d\t\trightbotted-->%d\t\ttopped-->%d", file->map_s->value_s->top_bott_ed, file->map_s->value_s->right_bott_ed, file->map_s->value_s->top_ed);
+	// printf("\nrighted-->%d\t\tbotted-->%d\t\tlefted-->%d\n", file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed, file->map_s->value_s->left_ed);
+
+	// printf("leftflag-->%d\ttopflag-->%d\trightflag-->%d\tbottflag-->%d\n", file->map_s->value_s->left_ed, file->map_s->value_s->top_ed, file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed);
+
+	//SINISTRO SUPERIORE DESTRO E INFERIORE
+	if (left_edge(file, i, j) && top_edge(file, i, j) && right_edge(file, i, j) && bottom_edge(file, i, j))
+	{
+		file->map_s->value_s->left_top_right_bott_ed = 1;
+		file->map_s->value_s->left_top_right_ed = 0;
+		file->map_s->value_s->left_bott_right_ed = 0;
+		file->map_s->value_s->top_right_bott_ed = 0;
+		file->map_s->value_s->left_right_ed = 0;
+		file->map_s->value_s->top_left_ed = 0;
+		file->map_s->value_s->top_right_ed = 0;
+		file->map_s->value_s->top_bott_ed = 0;
+		file->map_s->value_s->right_bott_ed = 0;
+		file->map_s->value_s->left_bott_ed = 0;
+		file->map_s->value_s->top_ed = 0;
+		file->map_s->value_s->right_ed = 0;
+		file->map_s->value_s->bott_ed = 0;
+		file->map_s->value_s->left_ed = 0;
+		printf("EDGE LEFT TOP RIGHT BOTTOM\t*****%c-->%d*****\n", file->map_s->map_matrix[i][j], file->map_s->value_s->left_top_right_bott_ed);
+		printf("\ntoprightbotlefted-->%d\n", file->map_s->value_s->left_top_right_bott_ed);
+	// printf("lefttoprighted-->%d\tleftbottrighted-->%d\ttoprightbotted-->%d", file->map_s->value_s->left_top_right_ed, file->map_s->value_s->left_bott_right_ed, file->map_s->value_s->top_right_bott_ed);
+	// printf("\nleftrighted-->%d\t\ttoplefted-->%d\t\ttoprighted-->%d", file->map_s->value_s->left_right_ed, file->map_s->value_s->top_left_ed, file->map_s->value_s->top_right_ed);
+	// printf("\ntopbotted-->%d\t\trightbotted-->%d\t\ttopped-->%d", file->map_s->value_s->top_bott_ed, file->map_s->value_s->right_bott_ed, file->map_s->value_s->top_ed);
+	// printf("\nrighted-->%d\t\tbotted-->%d\t\tlefted-->%d\n", file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed, file->map_s->value_s->left_ed);
+		return 1;
+	}
+	return 0;
+}
+
 
 int	left_top_right_ed(t_cubfile *file, int i, int j)
 {
@@ -134,7 +191,7 @@ int	left_right_ed(t_cubfile *file, int i, int j)
 		file->map_s->value_s->right_ed = 0;
 		file->map_s->value_s->bott_ed = 0;
 		file->map_s->value_s->left_ed = 0;
-		printf("EDGE LEFT RIGHT\t*****%c-->%d*****\n", file->map_s->map_matrix[i][j], file->map_s->value_s->left_right_ed);
+		printf("EDGE LEFT RIGHT\t\t*****%c-->%d*****\n", file->map_s->map_matrix[i][j], file->map_s->value_s->left_right_ed);
 		return 1;
 	}
 	return 0;
@@ -166,6 +223,7 @@ int	top_left_ed(t_cubfile *file, int i, int j)
 
 int top_right_ed(t_cubfile *file, int i, int j)
 {
+
 	//SUPERIORE E DESTRO
 	if(top_edge(file, i, j) && right_edge(file, i, j) && !left_edge(file, i, j) && !bottom_edge(file, i, j))
 	{
@@ -185,8 +243,13 @@ int top_right_ed(t_cubfile *file, int i, int j)
 
 		file->map_s->value_s->or_dir = -1;
 		file->map_s->value_s->ver_dir = 0;
-
 		printf("EDGE TOP RIGHT\t\t*****%c-->%d*****\n", file->map_s->map_matrix[i][j], file->map_s->value_s->top_right_ed);
+
+		// printf("lefttoprighted-->%d\tleftbottrighted-->%d\ttoprightbotted-->%d", file->map_s->value_s->left_top_right_ed, file->map_s->value_s->left_bott_right_ed, file->map_s->value_s->top_right_bott_ed);
+		// printf("\nleftrighted-->%d\t\ttoplefted-->%d\t\ttoprighted-->%d", file->map_s->value_s->left_right_ed, file->map_s->value_s->top_left_ed, file->map_s->value_s->top_right_ed);
+		// printf("\ntopbotted-->%d\t\trightbotted-->%d\t\ttopped-->%d", file->map_s->value_s->top_bott_ed, file->map_s->value_s->right_bott_ed, file->map_s->value_s->top_ed);
+		// printf("\nrighted-->%d\t\tbotted-->%d\t\tlefted-->%d\n", file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed, file->map_s->value_s->left_ed);
+
 		return 1;
 	}
 	return 0;
@@ -316,6 +379,8 @@ int	right_ed(t_cubfile *file, int i, int j)
 int	bott_ed(t_cubfile *file, int i, int j)
 {
 	//INFERIORE
+	// printf("leftflag-->%d\ttopflag-->%d\trightflag-->%d\tbottflag-->%d\n", file->map_s->value_s->left_ed, file->map_s->value_s->top_ed, file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed);
+
 	if(bottom_edge(file, i, j) && !left_edge(file, i, j) && !top_edge(file, i, j) && !right_edge(file, i, j))
 	{
 		file->map_s->value_s->left_top_right_ed = 0;
@@ -332,6 +397,7 @@ int	bott_ed(t_cubfile *file, int i, int j)
 		file->map_s->value_s->bott_ed = 1;
 		file->map_s->value_s->left_ed = 0;
 		printf("EDGE BOTTOM\t\t*****%c-->%d*****\n", file->map_s->map_matrix[i][j], file->map_s->value_s->bott_ed);
+	// printf("leftflag-->%d\ttopflag-->%d\trightflag-->%d\tbottflag-->%d\n", file->map_s->value_s->left_ed, file->map_s->value_s->top_ed, file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed);
 		return 1;
 	}
 	return 0;
@@ -340,6 +406,7 @@ int	bott_ed(t_cubfile *file, int i, int j)
 int left_ed(t_cubfile *file, int i, int j)
 {
 	//SINISTRO
+	// printf("leftflag-->%d\ttopflag-->%d\trightflag-->%d\tbottflag-->%d\n", file->map_s->value_s->left_ed, file->map_s->value_s->top_ed, file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed);
 	if(left_edge(file, i, j) && !top_edge(file, i, j) && !right_edge(file, i, j) && !bottom_edge(file, i, j))
 	{
 		file->map_s->value_s->left_top_right_ed = 0;
@@ -355,9 +422,16 @@ int left_ed(t_cubfile *file, int i, int j)
 		file->map_s->value_s->right_ed = 0;
 		file->map_s->value_s->bott_ed = 0;
 		file->map_s->value_s->left_ed = 1;
+
 		printf("EDGE LEFT\t\t*****%d-->%d*****\n", file->map_s->map_matrix[i][j], file->map_s->value_s->left_ed);
+
 		return 1;
 	}
+	// printf("LEFTEDGE %d\n", left_edge(file, i, j));
+	// printf("TOPEDGE %d\n", top_edge(file, i, j));
+	// printf("RIGHTEDGE %d\n", right_edge(file, i, j));
+	// printf("BOTTOMEDGE %d\n", bottom_edge(file, i, j));
+
 	return 0;
 }
 

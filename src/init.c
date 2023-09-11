@@ -62,10 +62,12 @@ void	init_structs(t_cubfile *file, char *str)
 	file->map_s->convex_corner = 0;
 	file->map_s->concave_corner = 0;
 	
+
 	file->map_s->value_s->or_dir = -1;
 	file->map_s->value_s->or_coming_dir = -1;
 	file->map_s->value_s->ver_dir = -1;
 	file->map_s->value_s->ver_coming_dir = -1;
+	file->map_s->value_s->left_top_right_bott_ed = 0;
 	file->map_s->value_s->left_top_right_ed = 0;
 	file->map_s->value_s->left_bott_right_ed = 0;
 	file->map_s->value_s->top_right_bott_ed = 0;
