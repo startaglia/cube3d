@@ -81,6 +81,6 @@ int			top_edge(t_cubfile *file, int i, int j);
 int			right_edge(t_cubfile *file, int i, int j);
 int			bottom_edge(t_cubfile *file, int i, int j);
 int			left_edge(t_cubfile *file, int i, int j);
-
+int			print_flags(t_value *value_s);
 
 #endif

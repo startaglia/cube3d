@@ -46,6 +46,8 @@ int main(int ac, char **av)
 	printf("INDICE INIZIO MAP %d\tINDICE FINE MAP %d\n", file->map_s->map_start_index, file->map_s->map_end_index);
 	// print_matrix(file->map_s->map_matrix);
 	print_matrix_char(file->map_s->map_matrix);
+	free(file->map_s->check_start_coord);
+	free(file->map_s->check_curr_ind_coord);
 	free_matrix(file->map_s->map_matrix);
 	free(file->map_s->value_s);
 	free(file->map_s);

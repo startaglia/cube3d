@@ -52,6 +52,15 @@ void	init_structs(t_cubfile *file, char *str)
 	file->map_s->map_start_index = 0;
 	file->map_s->map_end_index = 0;
 	file->map_s->map_height = 0;
+	file->map_s->check_start_coord = (int *)malloc(sizeof(int) * 2);
+	file->map_s->check_start_coord[0] = 0; 
+	file->map_s->check_start_coord[1] = 0;
+
+	file->map_s->check_curr_ind_coord = (int *)malloc(sizeof(int) * 2);
+	file->map_s->check_curr_ind_coord[0] = 0; 
+	file->map_s->check_curr_ind_coord[1] = 0;
+	file->map_s->convex_corner = 0;
+	file->map_s->concave_corner = 0;
 	
 	file->map_s->value_s->or_dir = -1;
 	file->map_s->value_s->or_coming_dir = -1;

@@ -47,7 +47,12 @@ typedef struct s_map
 	int		map_end_index;
 	int		map_widht;
 	int		map_height;
-
+	int		*check_start_coord;
+	int		*check_curr_ind_coord;
+	int		convex_corner;
+	int		concave_corner;
+	int		flat_corner;
+	// int		*check_end_coord;
 	t_value	*value_s;
 	
 } t_map;
