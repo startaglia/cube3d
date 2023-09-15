@@ -8,126 +8,50 @@ int converter_tab_space(t_cubfile *file, int i, int j, int k)
 	return k;
 }
 
-
-
-//gestisco tutte le condizioni possibili quando un 1 ha un char spazio ai lati o un edge
-// int		find_matrix_edge(t_cubfile *file, int i, int j)
-// {
-// 	if (left_top_right_ed(file, i, j))
-// 		return 1;
-// 	if (left_bott_right_ed(file, i, j))
-// 		return 1;
-// 	printf("VALORE %d(%c) NON HA EDGE INTORNO---BOTTOMVALUE %d\n", file->map_s->map_matrix[i][j], file->map_s->map_matrix[i][j], file->map_s->value_s->bott_ed);
-// 	printf("I-->%d\tJ-->%d\tMAPHEIGHT-->%d\tLENMAPT-->%d\tLENMAPD-->%d\n",i, j, (file->map_s->map_height - 1), (int)(ft_strlen(file->map_s->map_matrix[i - 1]) - 1), (int)(ft_strlen(file->map_s->map_matrix[i + 1]) - 1));
-// 	return 0;
-// }
-
-// void	print_edge(t_map *s_map, int i, int j)
-// {
-// 	if (s_map->value_s->left_top_right_ed)
-// 		printf("EDGE LEFT TOP RIGHT\t*****%c*****\n", s_map->map_matrix[i][j]);
-// 	else if(s_map->value_s->left_ed)
-// 		printf("EDGE LEFT\t*****%c*****\n", s_map->map_matrix[i][j]);
-// 	else if(s_map->value_s->top_bott_ed)
-// 		printf("EDGE TOP\t*****%c*****\n", s_map->map_matrix[i][j]);
-// }
-
-//il mov a destra deve solo controllare cosa c'è sopra e a destra
-int	right_mov_check(t_cubfile *file, int i, int j)
-{
-	// find_matrix_edge(file, i, j);
-	if (top_ed(file, i, j))
-	{
-		printf("QUELLO DOPO HA UNA EDGE SOPRA\n");
-		// j++;
-		return 1;
-	}
-	return 0;
-}
-
-int first_line_check(t_cubfile *file, int *i, int *j)
-{
-    *j = 0;
-    if (*i == 0)
-    {
-        if (left_top_right_ed(file, *i, *j))
-        {
-            file->map_s->value_s->ver_dir = 0;
-            file->map_s->value_s->ver_coming_dir = 0;
-            (*i)++;
-            return 0;
-        }
-        else if (top_left_ed(file, *i, *j))
-        {
-            (*j)++;
-            file->map_s->value_s->or_dir = 0;
-            file->map_s->value_s->or_coming_dir = 0;
-            while (file->map_s->map_matrix[*i][*j] && file->map_s->map_matrix[*i][*j + 1] != 32 && ((top_ed(file, *i, *j)) || (top_bott_ed(file, *i, *j))))
-            {
-                (*j)++;
-            }
-			// printf("VALORE MAP %d\tJ--> %d\n", file->map_s->map_matrix[*i][*j], *j);
-            if (top_right_bott_ed(file, *i, *j))
-            {
-                file->map_s->value_s->or_dir = 1;
-                file->map_s->value_s->or_coming_dir = 1;
-                return 0;
-            }
-            else if (top_right_ed(file, *i, *j))
-            {
-                file->map_s->value_s->ver_dir = 0;
-                file->map_s->value_s->ver_coming_dir = 0;
-				file->map_s->concave_corner = 1;
-				file->map_s->convex_corner = 0;
-
-                return 0;
-            }
-        }
-        else
-        {
-            printf("errore\n");
-            return 1;
-        }
-    }
-    return 0;
-}
-
 int		move_to_right_check(t_cubfile *file, int *i, int *j)
 {
-    if (left_top_right_ed(file, *i, *j))
-    {
-        file->map_s->value_s->ver_dir = 0;
-        file->map_s->value_s->ver_coming_dir = 0;
-		(*i)++;
-		return 0;
-	}
-	else if (top_left_ed(file, *i, *j))
+	if ((top_left_ed(file, *i, *j) && (!file->map_s->concave_corner && !file->map_s->convex_corner)))
 	{
 		(*j)++;
-
 		file->map_s->value_s->or_dir = 0;
-		file->map_s->value_s->or_coming_dir = 0;
-		while (file->map_s->map_matrix[*i][*j] && file->map_s->map_matrix[*i][*j + 1] != 32 && ((top_ed(file, *i, *j)) || (top_bott_ed(file, *i, *j))))
+		file->map_s->value_s->ver_dir = -1;
+		while (file->map_s->map_matrix[*i][*j] && !space_ch(file->map_s->map_matrix[*i][*j + 1]) && ((top_ed(file, *i, *j))))
 		{
 			(*j)++;
 		}
-		// (*j)--;
-		if (top_right_bott_ed(file, *i, *j))
+		printf("*****%c*****\t====================QUI C'è UN ANGOLO CONCAVO(↴)====================\n", file->map_s->map_matrix[*i][*j]);
+		if (top_right_ed(file, *i, *j))
 		{
-			file->map_s->value_s->or_dir = 1;
-			file->map_s->value_s->or_coming_dir = 1;
-			return 0;
-		}
-		else if (top_right_ed(file, *i, *j))
-		{
-		// printf("VALORE MAP %d\tJ--> %d\n", file->map_s->map_matrix[*i][*j], *j);
-			// (*i)++;
+			file->map_s->value_s->or_dir = -1;
+			file->map_s->value_s->or_coming_dir = -1;
 			file->map_s->value_s->ver_dir = 0;
 			file->map_s->value_s->ver_coming_dir = 0;
 			file->map_s->concave_corner = 1;
 			file->map_s->convex_corner = 0;
 			return 0;
 		}
+	}
+	else if((top_ed(file, *i, *j)))
+	{
+		(*j)++;
+		file->map_s->convex_corner = 0;
+		while (file->map_s->map_matrix[*i][*j] && !space_ch(file->map_s->map_matrix[*i][*j + 1]) && ((top_ed(file, *i, *j))))
+		{
+			(*j)++;
+		}
+		// controllo angolo conv
+		 if (!file->map_s->value_s->or_dir && (*i > 0 && (*j < ((int)(ft_strlen(file->map_s->map_matrix[*i]) - 1)) && *j < ((int)(ft_strlen(file->map_s->map_matrix[*i - 1]) - 1)) && (space_ch(file->map_s->map_matrix[*i - 1][*j - 1])))))
+		{
+			printf("*****%c*****\t====================QUI C'è UN ANGOLO CONVESSO(⤴ )====================\n", file->map_s->map_matrix[*i][*j]);
+			(*i)--;
+			file->map_s->value_s->ver_dir = 1;
+			file->map_s->value_s->or_dir = -1;
+			file->map_s->concave_corner = 0;
+			file->map_s->convex_corner = 1;
+			return 0;
+			// break;
+		}
+
 	}
 	else
 	{
@@ -139,42 +63,39 @@ int		move_to_right_check(t_cubfile *file, int *i, int *j)
 
 int		move_to_down_check(t_cubfile *file, int *i, int *j)
 {
-		// int h = 0;
 
-		if (left_top_right_ed(file, *i, *j))
+		if (top_right_ed(file, *i, *j))
 		{
+			(*i)++;
 			file->map_s->value_s->ver_dir = 0;
-			file->map_s->value_s->ver_coming_dir = 0;
-			(*i)++;
-			return 0;
-		}
-		else if (top_right_ed(file, *i, *j))
-		{
-			(*i)++;
-			// printf("VASUE-->%d\n", file->map_s->map_matrix[*i][*j]);
-			// printf("GEGE %d\n", right_ed(file, *i, *j));
-			// printf("I %d e J %d\n", *i, *j);
-			file->map_s->value_s->or_dir = 0;
-			file->map_s->value_s->or_coming_dir = 0;
-			// printf("RIGHTED%d\n", right_ed(file, *i, *j));
-			while (file->map_s->map_matrix[*i][*j] && (right_ed(file, *i, *j)))
+        	file->map_s->value_s->ver_coming_dir = 0;
+			file->map_s->value_s->or_dir = -1;
+			file->map_s->value_s->or_coming_dir = -1;
+			file->map_s->concave_corner = 0;
+			file->map_s->convex_corner = 0;
+
+			while ((file->map_s->map_matrix[*i][*j] && (right_ed(file, *i, *j))))
+				// (file->map_s->map_matrix[*i][*j] && left_top_right_bot_ed(file, *i, *j)) || (file->map_s->map_matrix[*i][*j] && (right_ed(file, *i, *j))))
 			{
-				// printf("VALORE %d\tI-->%d\tJ-->%d\n", file->map_s->map_matrix[*i][*j], *i, *j);
-				// printf("ALTEZZA MATRIX %d\n", (file->map_s->map_height - 1));
-				// printf("LEN %d\n", (int)(ft_strlen(file->map_s->map_matrix[*i]) - 1));
+
 				(*i)++;
 			}
+			if (!file->map_s->value_s->ver_dir && ((*i > 0 && (*j + 1 > (int)(ft_strlen(file->map_s->map_matrix[*i - 1]) - 1) && (*j < (int)(ft_strlen(file->map_s->map_matrix[*i]) - 1)))) || (*i > 0 && (file->map_s->map_matrix[*i - 1][*j + 1] == 32))))
+			{
+				printf("*****%c*****\t====================QUI C'è UN ANGOLO CONVESSO(↳)====================\n", file->map_s->map_matrix[*i][*j]);
+				(*j)++;
+				file->map_s->value_s->ver_dir = -1;
+				file->map_s->value_s->or_dir = 0;
+				file->map_s->concave_corner = 0;
+				file->map_s->convex_corner = 1;
+				return 0;
+				// break;
+			}
+
 			// (*i)--;
 			//ogni volta in questo punto ho bisogno di resettare tutte le flag perchè sennò mi rimane salvata quella vecchia
 			// reset_ed_flags(file);
 			// h = 1
-			//!CAPIRE PERCHE QUI TORNA 0 AI FLAG, DOVREBBE TORNARE 1 A TUTTI
-			// printf("VASUE-->%d\n", file->map_s->map_matrix[*i][*j]);
-			// printf("BEBE %d\n", top_ed_cond(file, *i, *j));
-			// printf("BEBE %d\n", right_ed_cond(file, *i, *j));
-			// printf("BEBE %d\n", bottom_edge(file, *i, *j));
-			// printf("BEBE %d\n", left_edge(file, *i, *j));
-
 			if (left_top_right_bot_ed(file, *i, *j))
 			{
 				return 0;
@@ -199,68 +120,80 @@ int		move_to_down_check(t_cubfile *file, int *i, int *j)
 
 int		move_to_left_check(t_cubfile *file, int *i, int *j)
 {
-	
-		if (top_right_bott_ed(file, *i, *j))
+	if (right_bott_ed(file, *i, *j))
+	{
+		(*j)--;
+		printf("rer\n");
+		file->map_s->value_s->or_dir = 1;
+		file->map_s->value_s->or_coming_dir = 1;
+		while (file->map_s->map_matrix[*i][*j] && bott_ed(file, *i, *j))
 		{
-			file->map_s->value_s->or_dir = 1;
-			file->map_s->value_s->or_coming_dir = 1;
 			(*j)--;
+		}
+		if (left_bott_ed(file, *i, *j))
+		{
+			printf("VALORE %d\tI-->%d\tJ-->%d\n", file->map_s->map_matrix[*i][*j], *i, *j);
+			// (*j)--;
+			file->map_s->value_s->ver_dir = 1;
+			file->map_s->value_s->ver_coming_dir = 1;
+			file->map_s->value_s->or_dir = -1;
+			file->map_s->value_s->or_coming_dir = -1;
+			file->map_s->concave_corner = 1;
+			file->map_s->convex_corner = 0;
 			return 0;
 		}
-		else if (right_bott_ed(file, *i, *j))
+	}
+	else if(bott_ed(file, *i, *j))
+	{
+		(*j)--;
+		file->map_s->convex_corner = 0;
+		while (file->map_s->map_matrix[*i][*j] && (bott_ed(file, *i, *j) && !top_ed(file, *i, *j) && !left_ed(file, *i, *j) && !right_ed(file, *i, *j)))
 		{
 			(*j)--;
-			printf("rer\n");
-			file->map_s->value_s->or_dir = 1;
-			file->map_s->value_s->or_coming_dir = 1;
-			while (file->map_s->map_matrix[*i][*j] && bott_ed(file, *i, *j))
-			{
-				// printf("I %d e J %d\n", *i, *j);
-				(*j)--;
-			}
-			if (left_bott_ed(file, *i, *j))
-			{
-				printf("VALORE %d\tI-->%d\tJ-->%d\n", file->map_s->map_matrix[*i][*j], *i, *j);
-				// (*j)--;
-				file->map_s->value_s->ver_dir = 1;
-				file->map_s->value_s->ver_coming_dir = 1;
-				file->map_s->concave_corner = 1;
-				file->map_s->convex_corner = 0;
-				return 0;
-			}
 		}
-		else
+			printf("VALUE %d\n", file->map_s->map_matrix[*i][*j]);
+			printf("TOP %d\n", top_ed_cond(file, *i, *j));
+			printf("RIGHT %d\n", right_ed_cond(file, *i, *j));
+			printf("BOTT %d\n", bott_ed_cond(file, *i, *j));
+			printf("LEFT %d\n", left_ed_cond(file, *i, *j));
+			printf("CONC %d\n", file->map_s->concave_corner);
+			printf("CONV %d\n", file->map_s->convex_corner);
+			printf("VERDIR %d\n", file->map_s->value_s->ver_dir);
+			printf("ORDIR %d\n\n", file->map_s->value_s->or_dir);
+		// controllo angolo concavo
+		 if (file->map_s->value_s->or_dir && (!top_ed_cond(file, *i, *j) && !right_ed_cond(file, *i, *j) && bott_ed_cond(file, *i, *j) && left_ed_cond(file, *i, *j)))
 		{
-			printf("errorbe\n");
-			return 1;
+			printf("*****%c*****\t====================QUI C'È UN ANGOLO CONCAVO(⬑)====================\n", file->map_s->map_matrix[*i][*j]);
+			(*i)--;
+
+			file->map_s->value_s->ver_dir = 1;
+			file->map_s->value_s->or_dir = -1;
+			file->map_s->concave_corner = 0;
+			file->map_s->convex_corner = 1;
+			return 0;
+			// break;
 		}
+		return 0;
+	}
+	else
+	{
+		printf("errorbe\n");
+		return 1;
+	}
 	return 0;	
 }
 
 int		move_to_top_check(t_cubfile *file, int *i, int *j)
 {
-	// printf("leftflag-->%d\ttopflag-->%d\trightflag-->%d\tbottflag-->%d\n", file->map_s->value_s->left_ed, file->map_s->value_s->top_ed, file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed);
-		if (left_bott_right_ed(file, *i, *j))
-		{
-			file->map_s->value_s->or_dir = 1;
-			file->map_s->value_s->or_coming_dir = 1;
-			(*j)--;
-			return 0;
-		}
-		else if (left_bott_ed(file, *i, *j))
+		if (left_bott_ed(file, *i, *j))
 		{
 			(*i)--;
 			file->map_s->value_s->ver_dir = 1;
 			file->map_s->value_s->ver_coming_dir = 1;
-			// printf("I %d e J %d\tVALUE %d\n", *i, *j, file->map_s->map_matrix[*i][*j]);
-			// printf("leftflag-->%d\ttopflag-->%d\trightflag-->%d\tbottflag-->%d\n", file->map_s->value_s->left_ed, file->map_s->value_s->top_ed, file->map_s->value_s->right_ed, file->map_s->value_s->bott_ed);
-			// printf("LEFTED %d\n", left_ed(file, *i, *j));
-			//!IL PROBL È CHE LEFTED MI RITORNA 0, DOVREBBE TORNARE 1
 			while ((file->map_s->map_matrix[*i][*j] && left_ed(file, *i, *j)) || (file->map_s->map_matrix[*i][*j] && left_right_ed(file, *i, *j)))
 			{
 				(*i)--;
 			}
-			// printf("NENE\n");
 			if (top_left_ed(file, *i, *j))
 			{
 				file->map_s->value_s->or_dir = 0;
@@ -268,6 +201,27 @@ int		move_to_top_check(t_cubfile *file, int *i, int *j)
 				file->map_s->concave_corner = 1;
 				file->map_s->convex_corner = 0;
 				return 0;
+			}
+		}
+		else if (left_ed(file, *i, *j))
+		{
+			file->map_s->convex_corner = 0;
+			(*i)--;
+			while ((file->map_s->map_matrix[*i][*j] && left_ed(file, *i, *j)))
+			{
+				(*i)--;
+			}
+			// controllo angolo conv
+			if (file->map_s->value_s->ver_dir && (!top_ed_cond(file, *i, *j) && !bott_ed_cond(file, *i, *j) && !right_ed_cond(file, *i, *j) && !left_ed_cond(file, *i, *j)))
+			{
+				printf("*****%c*****\t====================QUI C'è UN ANGOLO CONVESSO(↰ )====================\n", file->map_s->map_matrix[*i][*j]);
+				(*j)--;
+				file->map_s->value_s->ver_dir = -1;
+				file->map_s->value_s->or_dir = 1;
+				file->map_s->concave_corner = 0;
+				file->map_s->convex_corner = 1;
+				return 0;
+				// break;
 			}
 		}
 		else
@@ -297,12 +251,7 @@ void	surrounded_map_check(t_cubfile *file)
 	- angolo esterno
 		qui inizio ad andare verso il basso, quindi ciclo finche non finisce lo spazio o l'edge alla destra dell'1
 	- angolo interno
-
-
 	mi flaggo il tipo di angolo che ha trovato e in base a quello e la direzione mi muovo
-	
-
-
 	*/
 	file->map_s->check_curr_ind_coord[0] = i;
 	file->map_s->check_curr_ind_coord[1] = j;
@@ -318,49 +267,82 @@ void	surrounded_map_check(t_cubfile *file)
 				printf("valore %d\n", file->map_s->map_matrix[i][j]);
 				j++;
 			}
-			//qui controllo dove ho gli spazi e in base a quelli mi muovo
 			move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
 			move_to_down_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
-			move_to_left_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
 			move_to_top_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			move_to_left_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			printf("++++++++++++++++++++++++++++++++++++++++++++++\n");
+		}
+
+
+
+
 
 			// move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// if (file->map_s->concave_corner && !file->map_s->convex_corner &&  !file->map_s->value_s->ver_dir)
+			// {
+			// 	move_to_down_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// }
+			// printf("CONC-->%d\tCONV-->%d\tVERDIR-->%d\tORDIR-->%d\n", file->map_s->concave_corner, file->map_s->convex_corner, file->map_s->value_s->ver_dir, file->map_s->value_s->or_dir);
+			// if ((file->map_s->concave_corner && !file->map_s->convex_corner && file->map_s->value_s->ver_dir) || (file->map_s->convex_corner && !file->map_s->concave_corner && file->map_s->value_s->or_dir))
+			// 	move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// if ((file->map_s->concave_corner && !file->map_s->convex_corner &&  !file->map_s->value_s->ver_dir) || (file->map_s->convex_corner && !file->map_s->concave_corner && file->map_s->value_s->or_dir))
+			// if ((file->map_s->concave_corner && !file->map_s->convex_corner && file->map_s->value_s->ver_dir) || (file->map_s->convex_corner && !file->map_s->concave_corner && file->map_s->value_s->or_dir))
+
+			//while finche le coordinate iniziali e quelle dove sto non sono diverse
+			//dentro provo a farla ricorsiva
+
+				// if (file->map_s->convex_corner && !file->map_s->concave_corner)
+				// 	move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+				// else if (file->map_s->concave_corner && file->map_s->convex_corner)
+				// 	move_to_left_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// else if (file->map_s->convex_corner && !file->map_s->concave_corner &&  !file->map_s->value_s->ver_coming_dir)
+			// {
+			// 	move_to_top_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// 	if (file->map_s->convex_corner && !file->map_s->concave_corner)
+			// 		move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// 	else if (file->map_s->concave_corner && file->map_s->convex_corner)
+			// 		move_to_left_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// }
+				
+
+			
+			// move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+
 			//ciclo finchè le coordinate di start e di dove sono rimangono diverse
 			// while (file->map_s->check_start_coord[0] != file->map_s->check_curr_ind_coord[0] || file->map_s->check_start_coord[1] != file->map_s->check_curr_ind_coord[1])
 			// {
-				//controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione attuale è verso destra
-				// if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && !file->map_s->value_s->or_dir && !file->map_s->value_s->or_coming_dir)
-				// {
-				// 	move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
-				// }
-				// //controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione attuale è verso il basso
-				// if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && !file->map_s->value_s->ver_dir && !file->map_s->value_s->ver_coming_dir)
-				// {
-				// 	move_to_down_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
-				// }
-				// //controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione attuale è verso sinistra
-				// if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && file->map_s->value_s->or_dir && file->map_s->value_s->or_coming_dir)
-				// {
-				// 	move_to_left_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
-				// }
-				// //controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione attuale è verso l'alto
-				// if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && file->map_s->value_s->ver_dir && file->map_s->value_s->ver_coming_dir)
-				// {
-				// // printf("CORNER-->%d\tVALUE-->%d\tVER_DIR%d\tVER_COM_DIR%d\n\n", file->map_s->concave_corner, file->map_s->map_matrix[i][j], file->map_s->value_s->ver_dir, file->map_s->value_s->ver_coming_dir);
-				// 	// printf("ERR\n");
-				// 	move_to_top_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
-				// }
+			// 	// controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione attuale è verso destra
+			// 	if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && !file->map_s->value_s->or_dir && !file->map_s->value_s->or_coming_dir)
+			// 	{
+			// 		move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// 	}
+			// 	//controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione attuale è verso il basso
+			// 	if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && !file->map_s->value_s->ver_dir && !file->map_s->value_s->ver_coming_dir)
+			// 	{
+			// 		move_to_down_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// 	}
+			// 	//controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione attuale è verso sinistra
+			// 	if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && file->map_s->value_s->or_dir && file->map_s->value_s->or_coming_dir)
+			// 	{
+			// 		move_to_left_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// 	}
+			// 	//controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione attuale è verso l'alto
+			// 	if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && file->map_s->value_s->ver_dir && file->map_s->value_s->ver_coming_dir)
+			// 	{
+			// 	// printf("CORNER-->%d\tVALUE-->%d\tVER_DIR%d\tVER_COM_DIR%d\n\n", file->map_s->concave_corner, file->map_s->map_matrix[i][j], file->map_s->value_s->ver_dir, file->map_s->value_s->ver_coming_dir);
+			// 		// printf("ERR\n");
+			// 		move_to_top_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// 	}
 
-				printf("START COORD: I-->%d\t J-->%d\nCURR COORD: I-->%d\t J-->%d\n", file->map_s->check_start_coord[0], file->map_s->check_start_coord[1], file->map_s->check_curr_ind_coord[0], file->map_s->check_curr_ind_coord[1]);
-				//controllo se sono arrivato ad un angolo convesso(angolo interno) e la direzione attuale è verso destra
-				// if (file->map_s->convex_corner && file->map_s->map_matrix[i][j] && !file->map_s->value_s->or_dir && !file->map_s->value_s->or_coming_dir)
-				// {
-				// 	move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
-				// }
+			// 	//controllo se sono arrivato ad un angolo convesso(angolo interno) e la direzione attuale è verso destra
+			// 	// if (file->map_s->convex_corner && file->map_s->map_matrix[i][j] && !file->map_s->value_s->or_dir && !file->map_s->value_s->or_coming_dir)
+			// 	// {
+			// 	// 	move_to_right_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
+			// 	}
 			// }
 		// }
-			printf("++++++++++++++++++++++++++++++++++++++++++++++\n");
-		}
 			// //controllo se sono arrivato ad un angolo concavo(angolo esterno) e la direzione era verso sinistra
 			// if (file->map_s->concave_corner && file->map_s->map_matrix[i][j] && file->map_s->value_s->ver_dir && file->map_s->value_s->ver_coming_dir)
 			// 	move_to_top_check(file, &file->map_s->check_curr_ind_coord[0], &file->map_s->check_curr_ind_coord[1]);
