@@ -371,15 +371,15 @@ int	right_ed(t_cubfile *file, int i, int j)
 
 int	bott_ed(t_cubfile *file, int i, int j)
 {
-	printf("VALUE %d\n", file->map_s->map_matrix[i][j]);
-	printf("TOP %d\n", top_ed_cond(file, i, j));
-	printf("RIGHT %d\n", right_ed_cond(file, i, j));
-	printf("BOTT %d\n", bott_ed_cond(file, i, j));
-	printf("LEFT %d\n", left_ed_cond(file, i, j));
-	printf("CONC %d\n", file->map_s->concave_corner);
-	printf("CONV %d\n", file->map_s->convex_corner);
-	printf("VERDIR %d\n", file->map_s->value_s->ver_dir);
-	printf("ORDIR %d\n\n", file->map_s->value_s->or_dir);
+	// printf("VALUE %d\n", file->map_s->map_matrix[i][j]);
+	// printf("TOP %d\n", top_ed_cond(file, i, j));
+	// printf("RIGHT %d\n", right_ed_cond(file, i, j));
+	// printf("BOTT %d\n", bott_ed_cond(file, i, j));
+	// printf("LEFT %d\n", left_ed_cond(file, i, j));
+	// printf("CONC %d\n", file->map_s->concave_corner);
+	// printf("CONV %d\n", file->map_s->convex_corner);
+	// printf("VERDIR %d\n", file->map_s->value_s->ver_dir);
+	// printf("ORDIR %d\n\n", file->map_s->value_s->or_dir);
 	//INFERIORE
 	if(bott_ed_cond(file, i, j) && !left_ed_cond(file, i, j) && !top_ed_cond(file, i, j) && !right_ed_cond(file, i, j))
 	{
@@ -432,7 +432,7 @@ int left_ed(t_cubfile *file, int i, int j)
 		file->map_s->value_s->bott_ed = 0;
 		file->map_s->value_s->left_ed = 1;
 
-		printf("EDGE LEFT\t\t*****%d-->%d*****\n", file->map_s->map_matrix[i][j], file->map_s->value_s->left_ed);
+		printf("EDGE LEFT\t\t*****%c-->%d*****\n", file->map_s->map_matrix[i][j], file->map_s->value_s->left_ed);
 
 		return 1;
 	}
