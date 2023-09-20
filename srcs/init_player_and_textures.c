@@ -25,11 +25,11 @@ static int	set_player_pos(t_map *map)
 	int	y;
 	int	x;
 
-	y = 0;
-	while (map->map[y])
+	y = -1;
+	while (map->map[++y])
 	{
-		x = 0;
-		while (map->map[y][x])
+		x = -1;
+		while (map->map[y][++x])
 		{
 			if (ft_strchr("NSWE", map->map[y][x]))
 			{
@@ -37,9 +37,7 @@ static int	set_player_pos(t_map *map)
 				map->player_pos.y = y;
 				return (1);
 			}
-            x++;
 		}
-        y++;
 	}
 	return (0);
 }
@@ -76,15 +74,19 @@ static int    init_player(t_game *game)
 {
     if (set_player_pos(game->map))
     {
+		game->player.pos.x = (int)game->map->player_pos.x;
+		game->player.pos.y = (int)game->map->player_pos.y;
+		game->player.dir.x = 0.0;
+		game->player.dir.y = 0.0;
+		game->player.plane.x = 0.0;
+		game->player.plane.y = 0.0;
+		game->player.mov_dir.x = 0;
+		game->player.mov_dir.y = 0;
+		game->player.rot_dir = 0;
         set_player_dir_and_plane(game);
         game->map->map[(int)game->map->player_pos.y][(int)game->map->player_pos.x] = '0';
         if (!check_if_more_players(game))
         {
-            game->player.pos.x = (int)game->map->player_pos.x;
-            game->player.pos.y = (int)game->map->player_pos.y;
-            game->player.mov_dir.x = 0;
-            game->player.mov_dir.y = 0;
-            game->player.rot_dir = 0;
             game->time = get_time();
             game->old_time = get_time();
             return (0);
@@ -93,7 +95,8 @@ static int    init_player(t_game *game)
     else
 	{
 		free_map(game);
-        return (printf("Map Error\n"));
+        printf("Map Error\n");
+		exit(0);
 	}
 	return (1);
 }

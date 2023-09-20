@@ -1,26 +1,6 @@
 #include "cub3d.h"
 
-static void update_frames(t_game *game)
-{
-	char	*curr_fps;
-
-	game->old_time = game->time;
-	game->time = get_time();
-	game->frame_time = (game->time - game->old_time) / 1000.0;
-	game->fps = (int)(1.0 / game->frame_time);
-	if (game->fps > FPS_LOCK)
-	{
-		ft_sleep(((1.0 / FPS_LOCK) - game->frame_time) * 1000);
-		game->time = get_time();
-		game->frame_time = (game->time - game->old_time) / 1000.0;
-		game->fps = (int)(1.0 / game->frame_time);
-	}
-	curr_fps = ft_itoa(game->fps);
-	mlx_string_put(game->mlx, game->win, 20, 20, -1, curr_fps);
-	free(curr_fps);
-}
-
-void	draw_floor_and_ceiling(t_game *game)
+static void	draw_floor_and_ceiling(t_game *game)
 {
 	t_vec2	begin;
 	t_vec2	end;
@@ -48,12 +28,33 @@ void	draw_floor_and_ceiling(t_game *game)
 	}
 }
 
+// static void update_frames(t_game *game)
+// {
+// 	char	*curr_fps;
+
+// 	game->old_time = game->time;
+// 	game->time = get_time();
+// 	game->frame_time = (game->time - game->old_time) / 1000.0;
+// 	game->fps = (int)(1.0 / game->frame_time);
+// 	if (game->fps > FPS_LOCK)
+// 	{
+// 		ft_sleep(((1.0 / FPS_LOCK) - game->frame_time) * 1000);
+// 		game->time = get_time();
+// 		game->frame_time = (game->time - game->old_time) / 1000.0;
+// 		game->fps = (int)(1.0 / game->frame_time);
+// 	}
+// 	curr_fps = ft_itoa(game->fps);
+// 	mlx_string_put(game->mlx, game->win, 20, 20, -1, curr_fps);
+// 	free(curr_fps);
+// }
+
 int update(t_game *game)
 {
     mlx_clear_window(game->mlx, game->win);
     draw_floor_and_ceiling(game);
     casting_ray(game);
     mlx_put_image_to_window(game->mlx, game->win, game->screen.img, 0, 0);
-    update_frames(game);
+    // update_frames(game);
+	// update_player(game);
     return (0);
 }

@@ -99,27 +99,19 @@ typedef struct s_game
 
 }	t_game;
 
-// Time
+void		init_player_and_textures(t_game *game);
+void		free_map(t_game *game);
 u_int64_t	get_time(void);
-void	ft_sleep(u_int64_t time);
-
-// Free
-void	free_map(t_game *game);
-int	clean_exit(t_game *game);
-
-//	Player and textures
-void	init_player_and_textures(t_game *game);
-
-//	Loop
-int update(t_game *game);
-int	handle_key_down(int key, t_game *game);
-int	handle_key_up(int key, t_game *game);
-
-//	Rendering
-void    casting_ray(t_game *game);
-void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
-void	draw_line_on(t_image *img, t_vec2 begin, t_vec2 end, int color);
-int		create_trgb(int t, int r, int g, int b);
-void    start_rendering(t_game *game, int x);
+void		ft_sleep(u_int64_t time);
+int			handle_key_up(int key, t_game *game);
+int			handle_key_down(int key, t_game *game);
+int			clean_exit(t_game *game);
+int			update(t_game *game);
+void		casting_ray(t_game *game);
+void    	render_line(t_game *game, int x);
+void		my_mlx_pixel_put(t_image *img, int x, int y, int color);
+int			create_trgb(int t, int r, int g, int b);
+void		draw_line_on(t_image *img, t_vec2 begin, t_vec2 end, int color);
+// void		update_player(t_game *game);
 
 # endif

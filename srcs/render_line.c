@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	get_texture_x(t_game *game)
+static int	get_texture_x(t_game *game)
 {
 	double	wall_x;
 	int		tex_x;
@@ -20,7 +20,7 @@ int	get_texture_x(t_game *game)
 	return (tex_x);
 }
 
-void	draw_line_texture(t_game *game, int x)
+static void	draw_line_texture(t_game *game, int x)
 {
 	t_vec2			tex;
 	double			step;
@@ -37,8 +37,7 @@ void	draw_line_texture(t_game *game, int x)
 	{
 		tex.y = (int)tex_pos & (TEXTURE_SIZE - 1);
 		tex_pos += step;
-		color = *(unsigned int *)(game->walls[game->ray.color].addr
-				+ 4 * (TEXTURE_SIZE * (int)tex.y + (int)tex.x));
+		color = *(unsigned int *)(game->walls[game->ray.color].addr + 4 * (TEXTURE_SIZE * (int)tex.y + (int)tex.x));
 		my_mlx_pixel_put(&game->screen, x, y, color);
 	}
 }
