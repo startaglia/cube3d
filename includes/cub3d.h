@@ -85,7 +85,7 @@ typedef struct s_game
 {
 	t_raycaster	ray;
 	t_image		screen;
-	t_image		walls[3];
+	t_image		walls[4];
 	t_player	player;
 	t_map		*map;
 	u_int64_t	time;
@@ -112,6 +112,6 @@ void    	render_line(t_game *game, int x);
 void		my_mlx_pixel_put(t_image *img, int x, int y, int color);
 int			create_trgb(int t, int r, int g, int b);
 void		draw_line_on(t_image *img, t_vec2 begin, t_vec2 end, int color);
-// void		update_player(t_game *game);
+void		update_player(t_game *game);
 
 # endif

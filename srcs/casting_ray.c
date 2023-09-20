@@ -91,8 +91,7 @@ void	casting_ray(t_game *game)
 	int		x;
 
 	x = -1;
-	// Per ora il casting si ferma a x = 818 quando WIDTH = 1280
-	while (++x < WIDTH / 2)
+	while (++x < WIDTH)
 	{
 		init_raycast_on_x(game, x);
 		dda_part_one(game);
